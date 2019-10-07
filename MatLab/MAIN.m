@@ -8,12 +8,12 @@ syms masseS     % Masse  de la sphère
 
 syms masseP inertiePx intertiePy % masse et inertie plaque
 
-syms XA YA ZA   % position inertielle des éléments fixes K (K = A, B, C, D, E, F) 
+syms XA YA ZA   % position inertielle des éléments fixes
 syms XB YB ZB 
-syms XC YC ZK 
-syms XK YK ZK 
-syms XK YK ZK 
-syms XK YK ZK 
+syms XC YC ZC 
+syms XD YD ZD 
+syms XE YE ZE 
+syms XF YF ZF 
 
 
 syms Px Py Pz   % position de la sphère dans le repère inertiel 
