@@ -20,17 +20,38 @@ if plots(1)
 end
     
 %Building the P matrix and the Y vector
+% Here we try to find the best value for the offset by iteration
+tolerance = 1e-10;
+maxiter = 1e4;
+alpha = 0.0001; % step size
+i = 0;
+offset = 7; % After tests, the best offset is after 7 and before 8
+last_error = 1000;
 
-P = [ones(size(z_pos)) z_pos z_pos.^2 z_pos.^3];
-Y = -1./(Fs);
-A = inv(P.'*P)*P.'*Y
+while i < maxiter
+    P = [ones(size(z_pos)) z_pos z_pos.^2 z_pos.^3];
+    Y = -1./(offset - Fs);
+    A = pinv(P)*Y;
 
-%Evaluating the sim to verify
-Fs_sim = -1./(A(1) + A(2).*z_pos + A(3).*z_pos.^2 + A(4).*z_pos.^3);
+    %Evaluating the sim to verify
+    Fs_sim = offset + 1./(A(1) + A(2).*z_pos + A(3).*z_pos.^2 + A(4).*z_pos.^3);
+    
+    % Compute error
+    error = sqrt(mean((Fs_sim - Fs).^2));
+    
+    if last_error - error <= tolerance
+        break
+    end
+    
+    last_error = error;
+    offset = offset + alpha;
+    i = i + 1;
+end
 
-% TODO : Repair the sim ; it doesnt work
+% Clear useless variables
+clear alpha error last_error maxiter i tolerance
 
-% Figure 2 : Original vs sim
+%% Figure 2 : Original vs sim
 if plots(2)
     figure()
     hold on
