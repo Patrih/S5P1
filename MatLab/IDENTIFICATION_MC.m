@@ -1,10 +1,11 @@
+%% Force magn�tique
+
 clc
 clear all
 close all
 
 load('ACT_Fe_attraction.mat');
 load('ACT_Fs');
-
 % Array to choose the displayed figures ; a one in the position displays
 %Figure  1 2 3 4 5 6 7 8 9 
 plots = [0 0 0 1 1 0 0 0 0];
