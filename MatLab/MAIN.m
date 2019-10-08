@@ -26,9 +26,9 @@ syms FA FB FC   % forces appliquée par les actionneurs sur la plaque (positif ve
 syms MA MB MC   % couple appliquée par les actionneurs sur la plaque 
 syms VA VB VC   % tension électrique appliquée aux actionneurs
 syms IA IB IC   % courant électrique dans les actionneurs 
-
+syms FS         % Force gravitationnelle de la sphère
 syms Ya Yb Yc   % 
-
+syms GRAV       % Poids de la plaque
 % ? _??? : réfère à des variables mesurées
 % ? _??? : réfère aux variables désirées ou commandées
 % ? _??? : réfère aux variables initiales

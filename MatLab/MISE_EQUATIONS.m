@@ -13,6 +13,8 @@ syms phi theta z
 syms FsA FsB FsC
 syms Z
 syms Ka Kb Kc
+syms Fa Fb Fc
+
 
 %% 
 Tabc = [ YA  YB  YC;
@@ -35,6 +37,22 @@ FeB = Kb/(ae0+ae1*ZB+ae2*ZB^2+ae3*ZB^3);
 FeC = Kc/(ae0+ae1*ZC+ae2*ZC^2+ae3*ZC^3);
 
 
+%%
 
-isolate(FsA,theta)
+syms XS YS FS FP
+FB = FA*((XC*YA-XA*YC)/(XB*YC+XB))+FS*((XC*YS-XS*YC)/(XB*YC+XB));
+FC = -FA*((XC*YA-XA*YC)/(XB*YC+XB)*YB/YC+YA/YC)-FS*((XC*YS-XS*YC)/(XB*YC+XB)*YB/YC+YS/YC);
+
+
+FAe = solve(FA == -FS-FP-FB-FC , FA);
+FBe = FAe*((XC*YA-XA*YC)/(XB*YC+XB))+FS*((XC*YS-XS*YC)/(XB*YC+XB));
+FCe = -FAe*((XC*YA-XA*YC)/(XB*YC+XB)*YB/YC+YA/YC)-FS*((XC*YS-XS*YC)/(XB*YC+XB)*YB/YC+YS/YC);
+
+
+
+
+
+
+
+
 
