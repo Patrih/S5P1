@@ -1,4 +1,4 @@
-%% Force magnï¿½tique
+%% Force magnétique
 
 clc
 clear all
@@ -118,3 +118,13 @@ if plots(7)
     plot(z_m2A, Fe_m2A_sim - Fe_m2A);
     title("Erreur comparaison Fe_m2A_sim");
 end
+
+%% Errors
+rms_Fs = rms(Fs_sim - Fs);
+corr_Fs = corrcoef(Fs_sim, Fs);
+
+rms_Fe_m1A = rms(Fe_m1A_sim - Fe_m1A);
+corr_Fe_m1A = corrcoef(Fe_m1A_sim, Fe_m1A);
+
+rms_Fe_m2A = rms(Fe_m2A_sim - Fe_m2A);
+corr_Fe_m2A = corrcoef(Fe_m2A_sim, Fe_m2A);
