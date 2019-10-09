@@ -1,7 +1,7 @@
 %-----------------------------------------------------
 % Titre : mise_equation
 % Date de création : 07-10-2019
-% Auteur : Louis Etienne
+% Auteur : Philippe
 %-----------------------------------------------------
 
 %% Definitions
@@ -9,10 +9,12 @@ run('MAIN.m');
 
 syms ae0 ae1 ae2 ae3
 syms as0 as1 as2 as3
-syms phi theta z
+syms phi theta z ze
 syms FsA FsB FsC
 syms Z
 syms Ka Kb Kc
+syms Fk Fe iep ien bE1
+syms XK YK
 
 %% 
 Tabc = [ YA  YB  YC;
@@ -38,3 +40,17 @@ FeC = Kc/(ae0+ae1*ZC+ae2*ZC^2+ae3*ZC^3);
 
 isolate(FsA,theta)
 
+%% Identification de i
+% pour i < 0
+solve(Fe == (ien^2 - bE1*ien)*(-1) / (ae0 + ae1*z + ae2*z^2 + ae3*z^3), ien)
+
+% pour i > 0
+solve(Fe == (iep^2 + bE1*iep) / (ae0 + ae1*z + ae2*z^2 + ae3*z^3), iep)
+
+
+%% SS1-2
+% pour i < 0
+solve(Fe == (ien^2 - bE1*ien)*(-1) / (ae0 + ae1*(ze-XK*theta+YK*phi) + ae2*(ze-XK*theta+YK*phi)^2 + ae3*(ze-XK*theta+YK*phi)^3), ien)
+
+% pour i > 0
+solve(Fe == (iep^2 + bE1*iep) / (ae0 + ae1*(ze-XK*theta+YK*phi) + ae2*(ze-XK*theta+YK*phi)^2 + ae3*(ze-XK*theta+YK*phi)^3), iep)
