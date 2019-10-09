@@ -22,7 +22,7 @@ syms Va Vb Vc
 
 %------------------I positif-------------------------%
 
-Fk = ((Ik^2 + be1*Ik))/(ae0 + ae1*Zk + ae2*Zk^2 + ae3*Zk^3)-1/(as0 + as1*Zk + as2*Zk^2 + as3*Zk^3);
+Fk = ((Ik^2 + be1*abs(Ik)*sign(Ik)))/(ae0 + ae1*Zk + ae2*Zk^2 + ae3*Zk^3)-1/(as0 + as1*Zk + as2*Zk^2 + as3*Zk^3);
 
 Fk = subs (Fk,Zk,Z0-Xk*theta+Yk*phi);
 
