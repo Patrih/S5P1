@@ -15,6 +15,7 @@ syms Z
 syms Ka Kb Kc
 syms Fk Fe iep ien bE1
 syms XK YK
+syms Fa Fb Fc
 
 %% 
 Tabc = [ YA  YB  YC;
@@ -37,20 +38,36 @@ FeB = Kb/(ae0+ae1*ZB+ae2*ZB^2+ae3*ZB^3);
 FeC = Kc/(ae0+ae1*ZC+ae2*ZC^2+ae3*ZC^3);
 
 
+%%
 
-isolate(FsA,theta)
-
-%% Identification de i
-% pour i < 0
-solve(Fe == (ien^2 - bE1*ien)*(-1) / (ae0 + ae1*z + ae2*z^2 + ae3*z^3), ien)
-
-% pour i > 0
-solve(Fe == (iep^2 + bE1*iep) / (ae0 + ae1*z + ae2*z^2 + ae3*z^3), iep)
+syms XS YS FS FP
+FB = FA*((XC*YA-XA*YC)/(XB*YC+XB))+FS*((XC*YS-XS*YC)/(XB*YC+XB));
+FC = -FA*((XC*YA-XA*YC)/(XB*YC+XB)*YB/YC+YA/YC)-FS*((XC*YS-XS*YC)/(XB*YC+XB)*YB/YC+YS/YC);
 
 
-%% SS1-2
-% pour i < 0
-solve(Fe == (ien^2 - bE1*ien)*(-1) / (ae0 + ae1*(ze-XK*theta+YK*phi) + ae2*(ze-XK*theta+YK*phi)^2 + ae3*(ze-XK*theta+YK*phi)^3), ien)
+FAe = solve(FA == -FS-FP-FB-FC , FA);
+FBe = FAe*((XC*YA-XA*YC)/(XB*YC+XB))+FS*((XC*YS-XS*YC)/(XB*YC+XB));
+FCe = -FAe*((XC*YA-XA*YC)/(XB*YC+XB)*YB/YC+YA/YC)-FS*((XC*YS-XS*YC)/(XB*YC+XB)*YB/YC+YS/YC);
 
-% pour i > 0
-solve(Fe == (iep^2 + bE1*iep) / (ae0 + ae1*(ze-XK*theta+YK*phi) + ae2*(ze-XK*theta+YK*phi)^2 + ae3*(ze-XK*theta+YK*phi)^3), iep)
+
+
+
+
+
+
+
+
+% %% Identification de i
+% % pour i < 0
+% solve(Fe == (ien^2 - bE1*ien)*(-1) / (ae0 + ae1*z + ae2*z^2 + ae3*z^3), ien)
+% 
+% % pour i > 0
+% solve(Fe == (iep^2 + bE1*iep) / (ae0 + ae1*z + ae2*z^2 + ae3*z^3), iep)
+% 
+% 
+% %% SS1-2
+% % pour i < 0
+% solve(Fe == (ien^2 - bE1*ien)*(-1) / (ae0 + ae1*(ze-XK*theta+YK*phi) + ae2*(ze-XK*theta+YK*phi)^2 + ae3*(ze-XK*theta+YK*phi)^3), ien)
+% 
+% % pour i > 0
+% solve(Fe == (iep^2 + bE1*iep) / (ae0 + ae1*(ze-XK*theta+YK*phi) + ae2*(ze-XK*theta+YK*phi)^2 + ae3*(ze-XK*theta+YK*phi)^3), iep)

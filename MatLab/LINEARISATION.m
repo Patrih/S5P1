@@ -60,6 +60,36 @@ Fek_C = ((IC^2 + be1*abs(IC))*sign(IC))/(ae0 + ae1*Zc + ae2*Zc^2 + ae3*Zc^3);
 Fsk_C = -1/(as0 + as1*Zc + as2*Zc^2 + as3*Zc^3) ;
 FC = Fek_C + Fsk_C;
 
+
+% -------------------------- I negatif ------------------------------
+
+% Fek_A = -(IA^2 - be1*IA)/(ae0 + ae1*Za + ae2*Za^2 + ae3*Za^3);
+% Fsk_A = -1/(as0 + as1*Za + as2*Za^2 + as3*Za^3) ;
+% FA = Fek_A + Fsk_A;
+% 
+% Fek_B = -(IB^2 - be1*IB)/(ae0 + ae1*Zb + ae2*Zb^2 + ae3*Zb^3);
+% Fsk_B = -1/(as0 + as1*Zb + as2*Zb^2 + as3*Zb^3) ;
+% FB = Fek_B + Fsk_B;
+% 
+% Fek_C = -(IC^2 - be1*IC)/(ae0 + ae1*Zc + ae2*Zc^2 + ae3*Zc^3);
+% Fsk_C = -1/(as0 + as1*Zc + as2*Zc^2 + as3*Zc^3) ;
+% FC = Fek_C + Fsk_C;
+
+% -------------------------- I positif ------------------------------
+
+% Fek_A = (IA^2 + be1*IA)/(ae0 + ae1*Za + ae2*Za^2 + ae3*Za^3);
+% Fsk_A = -1/(as0 + as1*Za + as2*Za^2 + as3*Za^3) ;
+% FA = Fek_A + Fsk_A;
+% 
+% Fek_B = (IB^2 + be1*IB)/(ae0 + ae1*Zb + ae2*Zb^2 + ae3*Zb^3);
+% Fsk_B = -1/(as0 + as1*Zb + as2*Zb^2 + as3*Zb^3) ;
+% FB = Fek_B + Fsk_B;
+% 
+% Fek_C = (IC^2 + be1*IC)/(ae0 + ae1*Zc + ae2*Zc^2 + ae3*Zc^3);
+% Fsk_C = -1/(as0 + as1*Zc + as2*Zc^2 + as3*Zc^3) ;
+% FC = Fek_C + Fsk_C;
+
+
 dIA = VA/La - IA*Ra/La;      %F1
 dIB = VB/La - IB*Ra/La;      %F2
 dIC = VC/La - IC*Ra/La;      %F3
@@ -67,6 +97,12 @@ dIC = VC/La - IC*Ra/La;      %F3
 Az = (-FA - FB - FC + masseP*g + masseS *g)/masseP;         %F4
 alpha_phi = (FA*XA + FB*XB +FC*XC + Px*Fs)/inertiePx;       %F5
 alpha_theta = (-FA*YA - FB*YB - FC*YC - Fs*Py)/inertiePy;   %F6
+
+Az = subs (Az, 
+
+
+
+
 
 Vx = -(5*g*theta/7);         %F7
 Vy = (5*g*phi/7);            %F8
@@ -81,4 +117,26 @@ SP = jacobian([Vx , Vy],[phi , theta]);
 
 CC = jacobian([dIA , dIB , dIC],[IA , IB , IC]);
 
-Tdef = jacobian([dIA , dIB , dIC],[VA , VB , VC]);
+CV = jacobian([dIA , dIB , dIC],[VA , VB , VC]);
+
+
+
+
+%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
