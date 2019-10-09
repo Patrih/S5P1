@@ -98,6 +98,12 @@ Az = (-FA - FB - FC + masseP*g + masseS *g)/masseP;         %F4
 alpha_phi = (FA*XA + FB*XB +FC*XC + Px*Fs)/inertiePx;       %F5
 alpha_theta = (-FA*YA - FB*YB - FC*YC - Fs*Py)/inertiePy;   %F6
 
+Az = subs (Az, 
+
+
+
+
+
 Vx = -(5*g*theta/7);         %F7
 Vy = (5*g*phi/7);            %F8
 
@@ -112,6 +118,23 @@ SP = jacobian([Vx , Vy],[phi , theta]);
 CC = jacobian([dIA , dIB , dIC],[IA , IB , IC]);
 
 CV = jacobian([dIA , dIB , dIC],[VA , VB , VC]);
+
+
+
+
+%%
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
