@@ -121,10 +121,10 @@ end
 
 %% Errors
 rms_Fs = rms(Fs_sim - Fs);
-corr_Fs = corrcoef(Fs_sim, Fs);
+r2_Fs = (Fs_sim' - mean(Fs)) / (Fs' - mean(Fs));
 
 rms_Fe_m1A = rms(Fe_m1A_sim - Fe_m1A);
-corr_Fe_m1A = corrcoef(Fe_m1A_sim, Fe_m1A);
+r2_Fe_m1A = (Fe_m1A_sim' - mean(Fe_m1A)) / (Fe_m1A' - mean(Fe_m1A));
 
 rms_Fe_m2A = rms(Fe_m2A_sim - Fe_m2A);
-corr_Fe_m2A = corrcoef(Fe_m2A_sim, Fe_m2A);
+r2_Fe_m2A = (Fe_m2A_sim' - mean(Fe_m2A)) / (Fe_m2A' - mean(Fe_m2A));
