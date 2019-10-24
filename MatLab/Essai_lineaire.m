@@ -1,4 +1,5 @@
 clear all 
+IDENTIFICATION_MC;
 close all
 clc
 %% Essai lineraire
@@ -20,7 +21,6 @@ syms R L
 syms A
 syms Va Vb Vc
 
-%%------------------I positif -------------------------%
 
 Fk = (Ik*abs(Ik) + be1*Ik)/(ae0 + ae1*Zk + ae2*Zk^2 + ae3*Zk^3)-1/(as0 + as1*Zk + as2*Zk^2 + as3*Zk^3);
 
@@ -152,11 +152,6 @@ Ttdef = [ Yd  Ye  Yf;
          -Xd -Xe -Xf;
           1   1   1]';
 
-
-% A = zeros(13:13);
-% A(1:3,4:6) = 1;
-% A(4,1) = PP(1,1)
-
 A = [ 0 0 0 1 0 0 0 0 0 0 0 0 0;
       0 0 0 0 1 0 0 0 0 0 0 0 0;
       0 0 0 0 0 1 0 0 0 0 0 0 0;
@@ -200,6 +195,9 @@ B = [0 0 0;
       0 0 0;
       0 0 0;
       0 0 0;];
+  
+  
+  
 
 %% Calcul des matrices selon l'équilibre suivant
 
@@ -231,10 +229,27 @@ FAe = subs(FAe,[FS FP],[masseS*g masseP*g]);
 FBe = subs(FBe,[FS FP],[masseS*g masseP*g]);
 FCe = subs(FCe,[FS FP],[masseS*g masseP*g]);
 
-% I_e = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+((I_e^2 + be1*abs(I_e)*sign(I_e)))/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
-A_e = subs(A,[phi_e theta_e Z0_e Ia_e Ib_e Ic_e], [0 0 Zeq I_e I_e I_e]);
 
-I_eq = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+((I_e^2 + be1*I_e))/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
+
+%% Calcul de Ia_e, Ib_e et Ic_e selon 
+  
+  Ia_e = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FAe)+bE1);
+  Ia_e = subs(Ia_e,Zk,Z0_e-Xk*theta_e+Yk*phi_e);
+  Ia_e = subs(Ia_e,[Xk Yk],[Xa Ya]);
+  
+  Ib_e = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FBe)+bE1);
+  Ib_e = subs(Ib_e,Zk,Z0_e-Xk*theta_e+Yk*phi_e);
+  Ib_e = subs(Ib_e,[Xk Yk],[Xb Yb]);
+  
+  Ic_e = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FCe)+bE1);
+  Ic_e = subs(Ic_e,Zk,Z0_e-Xk*theta_e+Yk*phi_e);
+  Ic_e = subs(Ic_e,[Xk Yk],[Xc Yc]);
+  
+  %%
+% I_e = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+((I_e^2 + be1*abs(I_e)*sign(I_e)))/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
+A_e = subs(A,[phi_e theta_e Z0_e], [0 0 Zeq]);
+
+
 A_ep = subs (A_e,I_e,I_eq);
 
 
@@ -268,7 +283,7 @@ FAe = subs(FAe,[FS FP],[masseS*g masseP*g]);
 FBe = subs(FBe,[FS FP],[masseS*g masseP*g]);
 FCe = subs(FCe,[FS FP],[masseS*g masseP*g]);
 
-% I_e = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+((I_e^2 + be1*abs(I_e)*sign(I_e)))/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
+%I_a_e = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+((I_e*abs(I_e) + be1*I_e))/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
 
 
 A_e = subs(A,[phi_e theta_e Z0_e Ia_e Ib_e Ic_e], [0 0 Zeq I_e I_e I_e]);
@@ -278,7 +293,7 @@ A_e = subs(A,[phi_e theta_e Z0_e Ia_e Ib_e Ic_e], [0 0 Zeq I_e I_e I_e]);
 
 
 
-I_eq = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+(-I_e^2 + be1*I_e)/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
+I_a_eq = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+(-I_e^2 + be1*I_e)/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
 A_em = subs (A_e,I_e,I_eq(1));
 
 

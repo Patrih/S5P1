@@ -6,9 +6,9 @@ close all
 
 load('ACT_Fe_attraction.mat');
 load('ACT_Fs');
-% Array to choose the displayed figures ; a one in the position displays
+% Array to choose the dissplayed figures ; a one in the position displays
 %Figure  1 2 3 4 5 6 7 8 9 
-plots = [0 0 0 1 1 0 0 0 0];
+plots = [1 1 0 1 0 1 0 0 0];
 
 %figures 1 : Original data
 if plots(1)
@@ -21,7 +21,7 @@ if plots(1)
 end
    
 %% Approximating Fs
-%Building the P matrix and the Y vector
+% Building the P matrix and the Y vector
 % Here we try to find the best value for the offset by iteration
 tolerance = 1e-10;
 maxiter = 1e4;
@@ -32,11 +32,11 @@ last_error = 1000;
 
 while i < maxiter
     P = [ones(size(z_pos)) z_pos z_pos.^2 z_pos.^3];
-    Y = -1./(offset - Fs);
+    Y = -1./(Fs - offset);
     A = pinv(P)*Y;
 
     %Evaluating the sim to verify
-    Fs_sim = offset + 1./(A(1) + A(2).*z_pos + A(3).*z_pos.^2 + A(4).*z_pos.^3);
+    Fs_sim = offset - 1./(A(1) + A(2).*z_pos + A(3).*z_pos.^2 + A(4).*z_pos.^3);
     
     % Compute error
     error = sqrt(mean((Fs_sim - Fs).^2));
@@ -79,7 +79,7 @@ numerator = (iK^2 + bE1*abs(iK)) * sign(iK);
 
 P = [ones(size(z_m1A)) z_m1A z_m1A.^2 z_m1A.^3];
 Y = numerator ./ Fe_m1A;
-A1 = pinv(P) * Y
+A1 = pinv(P) * Y;
 
 Fe_m1A_sim = numerator ./ (A1(1) + A1(2)*z_m1A + A1(3)*z_m1A.^2 + A1(4)*z_m1A.^3);
 
@@ -102,7 +102,7 @@ numerator = (iK^2 + bE1*abs(iK)) * sign(iK);
 
 P = [ones(size(z_m2A)) z_m2A z_m2A.^2 z_m2A.^3];
 Y = numerator ./ Fe_m2A;
-A2 = pinv(P) * Y
+A2 = pinv(P) * Y;
 
 Fe_m2A_sim = numerator ./ (A2(1) + A2(2)*z_m2A + A2(3)*z_m2A.^2 + A2(4)*z_m2A.^3);
 
@@ -128,3 +128,21 @@ r2_Fe_m1A = (Fe_m1A_sim' - mean(Fe_m1A)) / (Fe_m1A' - mean(Fe_m1A));
 
 rms_Fe_m2A = rms(Fe_m2A_sim - Fe_m2A);
 r2_Fe_m2A = (Fe_m2A_sim' - mean(Fe_m2A)) / (Fe_m2A' - mean(Fe_m2A));
+
+%% Calculate force
+
+z = 30e-3;
+
+F = -1./(A(1) + A(2).*z + A(3).*z.^2 + A(4).*z.^3);
+
+
+% % di = 0.0001;
+% % x = linspace(0.0001,0.03,2000);
+% % for z = 0.0001:di:0.03
+% % F(round(z/di)) = -1/(A(1)+A(2)*z^1+A(3)*z^2+A(4)*z^3);
+% % F1 = ((452+8.2)*10^-3)*9.81;
+% % Fres(round(z/di)) = F1+F(round(z/di));
+% % Ares(round(z/di)) = Fres(round(z/di))/((452+8.2)*10^-3);
+% % end
+% % figure()
+% % plot(x,F)
