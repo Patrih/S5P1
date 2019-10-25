@@ -32,7 +32,7 @@ FC_eq = -FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys_eq-Xs_eq*Yc)/(X
 FA_eq = subs(FA_eq,[FS FP],[masseS*g masseP*g]);
 FB_eq = subs(FB_eq,[FS FP],[masseS*g masseP*g]);
 FC_eq = subs(FC_eq,[FS FP],[masseS*g masseP*g]);
-
+% Condition d'équilibre
 phi_eq = 0;
 theta_eq = 0;
 syms Z0_eq
@@ -43,7 +43,6 @@ syms Xs_eq
 syms Ys_eq
 DXs_eq = 0;
 DYs_eq =0;
-
 
   Ia_eq = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FA_eq)+bE1);
   Ia_eq = subs(Ia_eq,Zk,Z0_eq-Xk*theta_eq+Yk*phi_eq);
@@ -99,6 +98,9 @@ DOthetadot_Dz     = 1/J*(Xa*DFa_Dz + Xb*DFb_Dz + Xc*DFc_Dz);
 DVzdot_Dphi       = 1/masseP *(DFa_Dphi + DFb_Dphi + DFc_Dphi);
 DVzdot_Dtheta     = 1/masseP *(DFa_Dtheta + DFb_Dtheta + DFc_Dtheta);
 DVzdot_Dz         = 1/masseP *(DFa_Dz + DFb_Dz + DFc_Dz);
+
+
+
 
 PP  = [DOphidot_Dphi   DOphidot_Dtheta   DOphidot_Dz;
        DOthetadot_Dphi DOthetadot_Dtheta DOthetadot_Dz;
@@ -263,7 +265,19 @@ B = [0 0 0;
 
 
 
+%% Équilibre
+E = [0.01 -0.001 -0.001];
+% Z0_eq = 0.01;
+% Ys_eq = 0.001;
+% Xs_eq = 0.001;
 
+A = subs (A,[Z0_eq,Xs_eq,Ys_eq],E);
+
+B = subs (B,[Z0_eq,Xs_eq,Ys_eq],E);
+
+C = subs (C,[Z0_eq,Xs_eq,Ys_eq],E);
+
+D = subs (D,[Z0_eq,Xs_eq,Ys_eq],E);
 
 
   
