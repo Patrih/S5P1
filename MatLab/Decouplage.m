@@ -1,4 +1,4 @@
-clear all
+
 systeme_matriciel;
 close all 
 clc

@@ -8,7 +8,7 @@ load('ACT_Fe_attraction.mat');
 load('ACT_Fs');
 % Array to choose the dissplayed figures ; a one in the position displays
 %Figure  1 2 3 4 5 6 7 8 9 
-plots = [1 1 0 1 0 1 0 0 0];
+plots = [0 0 0 0 0 0 0 0 0];
 
 %figures 1 : Original data
 if plots(1)
@@ -33,10 +33,10 @@ last_error = 1000;
 while i < maxiter
     P = [ones(size(z_pos)) z_pos z_pos.^2 z_pos.^3];
     Y = -1./(Fs - offset);
-    A = pinv(P)*Y;
+    As = pinv(P)*Y;
 
     %Evaluating the sim to verify
-    Fs_sim = offset - 1./(A(1) + A(2).*z_pos + A(3).*z_pos.^2 + A(4).*z_pos.^3);
+    Fs_sim = offset - 1./(As(1) + As(2).*z_pos + As(3).*z_pos.^2 + As(4).*z_pos.^3);
     
     % Compute error
     error = sqrt(mean((Fs_sim - Fs).^2));
@@ -79,9 +79,9 @@ numerator = (iK^2 + bE1*abs(iK)) * sign(iK);
 
 P = [ones(size(z_m1A)) z_m1A z_m1A.^2 z_m1A.^3];
 Y = numerator ./ Fe_m1A;
-A1 = pinv(P) * Y;
+Ae = pinv(P) * Y;
 
-Fe_m1A_sim = numerator ./ (A1(1) + A1(2)*z_m1A + A1(3)*z_m1A.^2 + A1(4)*z_m1A.^3);
+Fe_m1A_sim = numerator ./ (Ae(1) + Ae(2)*z_m1A + Ae(3)*z_m1A.^2 + Ae(4)*z_m1A.^3);
 
 if plots(4)
     figure
@@ -102,9 +102,9 @@ numerator = (iK^2 + bE1*abs(iK)) * sign(iK);
 
 P = [ones(size(z_m2A)) z_m2A z_m2A.^2 z_m2A.^3];
 Y = numerator ./ Fe_m2A;
-A2 = pinv(P) * Y;
+Ae2 = pinv(P) * Y;
 
-Fe_m2A_sim = numerator ./ (A2(1) + A2(2)*z_m2A + A2(3)*z_m2A.^2 + A2(4)*z_m2A.^3);
+Fe_m2A_sim = numerator ./ (Ae2(1) + Ae2(2)*z_m2A + Ae2(3)*z_m2A.^2 + Ae2(4)*z_m2A.^3);
 
 if plots(6)
     figure
@@ -133,7 +133,7 @@ r2_Fe_m2A = (Fe_m2A_sim' - mean(Fe_m2A)) / (Fe_m2A' - mean(Fe_m2A));
 
 z = 30e-3;
 
-F = -1./(A(1) + A(2).*z + A(3).*z.^2 + A(4).*z.^3);
+F = -1./(As(1) + As(2).*z + As(3).*z.^2 + As(4).*z.^3);
 
 
 % % di = 0.0001;

@@ -1,4 +1,4 @@
-clear all
+
 IDENTIFICATION_MC;
 close all
 clc
@@ -46,27 +46,27 @@ syms Ys_eq
 DXs_eq = 0;
 DYs_eq =0;
 
-  Ia_eq = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FA_eq)+bE1);
+  Ia_eq = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FA_eq)+bE1);
   Ia_eq = subs(Ia_eq,Zk,Z0_eq-Xk*theta_eq+Yk*phi_eq);
   Ia_eq = subs(Ia_eq,[Xk Yk],[Xa Ya]);
   
-  Ib_eq = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FB_eq)+bE1);
+  Ib_eq = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FB_eq)+bE1);
   Ib_eq = subs(Ib_eq,Zk,Z0_eq-Xk*theta_eq+Yk*phi_eq);
   Ib_eq = subs(Ib_eq,[Xk Yk],[Xb Yb]);
   
-  Ic_eq = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FC_eq)+bE1);
+  Ic_eq = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FC_eq)+bE1);
   Ic_eq = subs(Ic_eq,Zk,Z0_eq-Xk*theta_eq+Yk*phi_eq);
   Ic_eq = subs(Ic_eq,[Xk Yk],[Xc Yc]);
 
-  Va_eq = Ia_eq/R;
-  Vb_eq = Ib_eq/R;
-  Vc_eq = Ic_eq/R;
+  Va_eq = Ia_eq*R;
+  Vb_eq = Ib_eq*R;
+  Vc_eq = Ic_eq*R;
 
 
 
 %%
 
-Fk = (Ik*abs(Ik) + bE1*Ik)/(A1(1) + A1(2)*Zk + A1(3)*Zk^2 + A1(4)*Zk^3)+(-1/(A(1) + A(2)*Zk + A(3)*Zk^2 + A(4)*Zk^3)+offset);
+Fk = (Ik*abs(Ik) + bE1*Ik)/(Ae(1) + Ae(2)*Zk + Ae(3)*Zk^2 + Ae(4)*Zk^3)+(-1/(As(1) + As(2)*Zk + As(3)*Zk^2 + As(4)*Zk^3)+offset);
 
 Fk = subs (Fk,Zk,Z0_eq-Xk*theta_eq+Yk*phi_eq);
 
@@ -197,15 +197,15 @@ CV = [DIadot_DVa DIadot_DVb DIadot_DVc;
   
 %% Calcul des I équilibres
 
- Ia_eq = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FA_eq)+bE1);
+ Ia_eq = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FA_eq)+bE1);
   Ia_eq = subs(Ia_eq,Zk,Z0_eq-Xk*theta_eq+Yk*phi_eq);
   Ia_eq = subs(Ia_eq,[Xk Yk],[Xa Ya]);
   
-  Ib_eq = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FB_eq)+bE1);
+  Ib_eq = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FB_eq)+bE1);
   Ib_eq = subs(Ib_eq,Zk,Z0_eq-Xk*theta_eq+Yk*phi_eq);
   Ib_eq = subs(Ib_eq,[Xk Yk],[Xb Yb]);
   
-  Ic_eq = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FC_eq)+bE1);
+  Ic_eq = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FC_eq)+bE1);
   Ic_eq = subs(Ic_eq,Zk,Z0_eq-Xk*theta_eq+Yk*phi_eq);
   Ic_eq = subs(Ic_eq,[Xk Yk],[Xc Yc]);
 
@@ -218,6 +218,9 @@ Ye =  0;
 Xf =  Rdef_ini*sind(30);
 Yf = -Rdef_ini*cosd(30);
 
+Ttabc = [Ya  Yb  Yc;
+        -Xa -Xb -Xc;
+          1   1   1]';
 
 Ttdef = [ Yd  Ye  Yf;
          -Xd -Xe -Xf;
@@ -278,13 +281,13 @@ B = [0 0 0;
 E = [ 0.01  -0.001 -0.001];
 
 
-% A = subs (A,[Z0_eq,Xs_eq,Ys_eq],E);
-% 
-% B = subs (B,[Z0_eq,Xs_eq,Ys_eq],E);
-% 
-% C = subs (C,[Z0_eq,Xs_eq,Ys_eq],E);
-% 
-% D = subs (D,[Z0_eq,Xs_eq,Ys_eq],E);
+A = subs (A,[Z0_eq,Xs_eq,Ys_eq],E);
+
+B = subs (B,[Z0_eq,Xs_eq,Ys_eq],E);
+
+C = subs (C,[Z0_eq,Xs_eq,Ys_eq],E);
+
+D = subs (D,[Z0_eq,Xs_eq,Ys_eq],E);
 
 %------------------------------------------------------------------------------%
   

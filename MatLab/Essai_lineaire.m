@@ -237,15 +237,15 @@ FCe = subs(FCe,[FS FP],[masseS*g masseP*g]);
 
 %% Calcul de Ia_e, Ib_e et Ic_e selon 
   
-  Ia_e = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FAe)+bE1);
+  Ia_e = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FAe)+bE1);
   Ia_e = subs(Ia_e,Zk,Z0_e-Xk*theta_e+Yk*phi_e);
   Ia_e = subs(Ia_e,[Xk Yk],[Xa Ya]);
   
-  Ib_e = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FBe)+bE1);
+  Ib_e = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FBe)+bE1);
   Ib_e = subs(Ib_e,Zk,Z0_e-Xk*theta_e+Yk*phi_e);
   Ib_e = subs(Ib_e,[Xk Yk],[Xb Yb]);
   
-  Ic_e = 1/2.*(-sqrt(bE1^2+4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*(-1./(A(1) + A(2).*Zk + A(3).*Zk.^2 + A(4).*Zk.^3)+offset)-4.*(A1(1) + A1(2)*Zk + A1(3)*Zk.^2 + A1(4)*Zk.^3).*FCe)+bE1);
+  Ic_e = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FCe)+bE1);
   Ic_e = subs(Ic_e,Zk,Z0_e-Xk*theta_e+Yk*phi_e);
   Ic_e = subs(Ic_e,[Xk Yk],[Xc Yc]);
   
