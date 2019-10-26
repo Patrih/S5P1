@@ -147,6 +147,10 @@ CV = [DIadot_DVa DIadot_DVb DIadot_DVc;
       DIcdot_DVa DIcdot_DVb DIcdot_DVc;];
   
 %%
+%La matrice Ttabc est utilisée au découplage
+Ttabc = [Ya  Yb  Yc;
+        -Xa -Xb -Xc;
+          1   1   1]';
 
 Ttdef = [ Yd  Ye  Yf;
          -Xd -Xe -Xf;

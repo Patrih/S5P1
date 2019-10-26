@@ -19,6 +19,8 @@ masseP = 442e-3;
 masseS = 8e-3;
 J = 1347e-6;
 g = 9.81;
+R = 3.6;
+L = 115e-3;
 %% calcul de l'équilibre avec sphère/horizontale
 syms FS FP FA FB FC FA_eq FB_eq FC_eq Xs_eq Ys_eq
 FB = FA*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys_eq-Xs_eq*Yc)/(Xb*Yc+Xb));
@@ -56,6 +58,9 @@ DYs_eq =0;
   Ic_eq = subs(Ic_eq,Zk,Z0_eq-Xk*theta_eq+Yk*phi_eq);
   Ic_eq = subs(Ic_eq,[Xk Yk],[Xc Yc]);
 
+  Va_eq = Ia_eq/R;
+  Vb_eq = Ib_eq/R;
+  Vc_eq = Ic_eq/R;
 
 
 
@@ -153,8 +158,7 @@ SP = [DVxs_Dphi DVxs_Dtheta DVxs_Dz;
       DVys_Dphi DVys_Dtheta DVys_Dz];
   
 %%
-R = 3.6;
-L = 115e-3;
+
 
 DIadot_DIa = -R/L;
 DIadot_DIb = 0;
@@ -266,18 +270,21 @@ B = [0 0 0;
 
 
 %% Équilibre
-E = [0.01 -0.001 -0.001];
-% Z0_eq = 0.01;
-% Ys_eq = 0.001;
-% Xs_eq = 0.001;
+%------------------------------------------------------------------------------%
+%section a mettre en commentaire (Ctrl+R) si on veut les /quation avec les
+%variables Z0_eq, Xs_eq et Ys_eq
 
-A = subs (A,[Z0_eq,Xs_eq,Ys_eq],E);
-
-B = subs (B,[Z0_eq,Xs_eq,Ys_eq],E);
-
-C = subs (C,[Z0_eq,Xs_eq,Ys_eq],E);
-
-D = subs (D,[Z0_eq,Xs_eq,Ys_eq],E);
+%     Z0_eq Xs_eq  Ys_eq
+E = [ 0.01  -0.001 -0.001];
 
 
+% A = subs (A,[Z0_eq,Xs_eq,Ys_eq],E);
+% 
+% B = subs (B,[Z0_eq,Xs_eq,Ys_eq],E);
+% 
+% C = subs (C,[Z0_eq,Xs_eq,Ys_eq],E);
+% 
+% D = subs (D,[Z0_eq,Xs_eq,Ys_eq],E);
+
+%------------------------------------------------------------------------------%
   
