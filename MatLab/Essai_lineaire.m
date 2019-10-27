@@ -287,19 +287,64 @@ FAe = subs(FAe,[FS FP],[masseS*g masseP*g]);
 FBe = subs(FBe,[FS FP],[masseS*g masseP*g]);
 FCe = subs(FCe,[FS FP],[masseS*g masseP*g]);
 
-%I_a_e = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+((I_e*abs(I_e) + be1*I_e))/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
+% %I_a_e = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+((I_e*abs(I_e) + be1*I_e))/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
+% 
+% 
+% A_e = subs(A,[phi_e theta_e Z0_e Ia_e Ib_e Ic_e], [0 0 Zeq I_e I_e I_e]);
+% 
+% 
+% %-----------------------negatif---------------------%
+% 
+% 
+% 
+% I_a_eq = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+(-I_e^2 + be1*I_e)/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
+% A_em = subs (A_e,I_e,I_eq(1));
+% 
 
 
-A_e = subs(A,[phi_e theta_e Z0_e Ia_e Ib_e Ic_e], [0 0 Zeq I_e I_e I_e]);
 
+%% système final 
+syms F_phi F_theta F_z Rabc I_phi I_theta I_z
 
-%-----------------------negatif---------------------%
+Fk = (Ik*abs(Ik) + be1*Ik)/(ae0 + ae1*Zk + ae2*Zk^2 + ae3*Zk^3)-1/(as0 + as1*Zk + as2*Zk^2 + as3*Zk^3);
 
+F_phi = subs (Fk,[Zk Ik],[Z0_e-Rabc*phi_e I_phi]);
+F_theta = subs (Fk,[Zk Ik],[Z0_e-Rabc*theta_e I_theta]);
+F_z = subs (Fk,[Zk Ik],[Z0_e I_z]);
 
+DF_phi_Dphi     = diff(F_phi,phi_e);
+DF_phi_Dtheta   = diff(F_phi,theta_e);
+DF_phi_Dz       = diff(F_phi,Z0_e);
+DF_phi_DI_phi   = diff(F_phi,I_phi);
+DF_phi_DI_theta = diff(F_phi,I_theta);
+DF_phi_DI_z     = diff(F_phi,I_z);
 
-I_a_eq = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+(-I_e^2 + be1*I_e)/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
-A_em = subs (A_e,I_e,I_eq(1));
+DF_theta_Dphi     = diff(F_theta,phi_e);
+DF_theta_Dtheta   = diff(F_theta,theta_e);
+DF_theta_Dz       = diff(F_theta,Z0_e);
+DF_theta_DI_phi   = diff(F_theta,I_phi);
+DF_theta_DI_theta = diff(F_theta,I_theta);
+DF_theta_DI_z     = diff(F_theta,I_z);
 
+DF_z_Dphi     = diff(F_phi,phi_e);
+DF_z_Dtheta   = diff(F_phi,theta_e);
+DF_z_Dz       = diff(F_phi,Z0_e);
+DF_z_DI_phi   = diff(F_phi,I_phi);
+DF_z_DI_theta = diff(F_phi,I_theta);
+DF_z_DI_z     = diff(F_phi,I_z);
 
+DOphidot_Dphi     = 1/J*(Rabc*DF_phi_Dphi);
+DOphidot_Dtheta   = 1/J*(Rabc*DF_phi_Dtheta);
+DOphidot_Dz       = 1/J*(Rabc*DF_phi_Dz);
+%%
+DOthetadot_Dphi   = 1/J*(Xa*DFa_Dphi + Xb*DFb_Dphi + Xc*DFc_Dphi);
+DOthetadot_Dtheta = 1/J*(Xa*DFa_Dtheta + Xb*DFb_Dtheta + Xc*DFc_Dtheta);
+DOthetadot_Dz     = 1/J*(Xa*DFa_Dz + Xb*DFb_Dz + Xc*DFc_Dz);
 
+DVzdot_Dphi       = 1/masseP *(DFa_Dphi + DFb_Dphi + DFc_Dphi);
+DVzdot_Dtheta     = 1/masseP *(DFa_Dtheta + DFb_Dtheta + DFc_Dtheta);
+DVzdot_Dz         = 1/masseP *(DFa_Dz + DFb_Dz + DFc_Dz);
 
+PP  = [DOphidot_Dphi   DOphidot_Dtheta   DOphidot_Dz;
+       DOthetadot_Dphi DOthetadot_Dtheta DOthetadot_Dz;
+       DVzdot_Dphi     DVzdot_Dtheta     DVzdot_Dz];

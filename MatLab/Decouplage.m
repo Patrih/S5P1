@@ -80,7 +80,27 @@ D_sphere_y(2,1) = D_sphere(4,1);
 
 %Découplage des axes de la plaque
 
+% calcul de l'équilbre pour le découplage final 
 
+syms I_phi_eq V_phi_eq I_theta_eq V_theta_eq I_z_eq V_z_eq
+
+%quand phi_eq,theta_eq, F_phi_eq, F_theta_eq =0
+
+I_phi_eq = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)));
+I_phi_eq = subs(I_phi_eq,Zk,Z0_eq);
+
+I_theta_eq = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)));
+I_theta_eq = subs(I_theta_eq,Zk,Z0_eq);
+
+
+I_z_eq = 1/2.*(-sqrt(bE1^2+4.*((Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-masseP*g)));
+I_z_eq = subs(I_z_eq,Zk,Z0_eq);
+
+
+
+V_phi_eq = R*I_phi_eq;
+V_theta_eq = R*I_theta_eq;
+V_z_eq = R*I_z_eq;
 
 
 
