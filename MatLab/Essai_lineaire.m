@@ -12,40 +12,39 @@ syms masseP masseS g
 syms ae0 ae1 ae2 ae3
 syms be1
 syms as0 as1 as2 as3
-syms Zk 
-syms Xk Yk
+syms ZK XK YK
 syms Xa Xb Xc Xd Xe Xf Ya Yb Yc Yd Ye Yf
-syms Ia_e Ib_e Ic_e
+syms IA_eq IB_eq IC_eq
 syms Xs Ys
 syms R L
 syms A
-syms Va Vb Vc
+syms VA VB VC
 
 
-Fk = (Ik*abs(Ik) + be1*Ik)/(ae0 + ae1*Zk + ae2*Zk^2 + ae3*Zk^3)-1/(as0 + as1*Zk + as2*Zk^2 + as3*Zk^3);
+Fk = (Ik*abs(Ik) + be1*Ik)/(ae0 + ae1*ZK + ae2*ZK^2 + ae3*ZK^3)-1/(as0 + as1*ZK + as2*ZK^2 + as3*ZK^3);
 
-Fk = subs (Fk,Zk,Z0_e-Xk*theta_e+Yk*phi_e);
+Fk = subs (Fk,ZK,Z0_e-XK*theta_e+YK*phi_e);
 
 DFk_Dtheta = diff(Fk,theta_e);
 DFk_Dphi = diff(Fk,phi_e);
 DFk_Dz = diff(Fk,Z0_e);
 DFk_DI = diff(Fk,Ik);
 
-DFa_Dphi = subs(DFk_Dphi,[Ik Xk Yk],[Ia_e Xa Ya]);
-DFb_Dphi = subs(DFk_Dphi,[Ik Xk Yk],[Ib_e Xb Yb]);
-DFc_Dphi = subs(DFk_Dphi,[Ik Xk Yk],[Ic_e Xc Yc]);
+DFa_Dphi = subs(DFk_Dphi,[Ik XK YK],[IA_eq Xa Ya]);
+DFb_Dphi = subs(DFk_Dphi,[Ik XK YK],[IB_eq Xb Yb]);
+DFc_Dphi = subs(DFk_Dphi,[Ik XK YK],[IC_eq Xc Yc]);
 
-DFa_Dtheta = subs(DFk_Dtheta,[Ik Xk Yk],[Ia_e Xa Ya]);
-DFb_Dtheta = subs(DFk_Dtheta,[Ik Xk Yk],[Ib_e Xb Yb]);
-DFc_Dtheta = subs(DFk_Dtheta,[Ik Xk Yk],[Ic_e Xc Yc]);
+DFa_Dtheta = subs(DFk_Dtheta,[Ik XK YK],[IA_eq Xa Ya]);
+DFb_Dtheta = subs(DFk_Dtheta,[Ik XK YK],[IB_eq Xb Yb]);
+DFc_Dtheta = subs(DFk_Dtheta,[Ik XK YK],[IC_eq Xc Yc]);
 
-DFa_Dz = subs(DFk_Dz,[Ik Xk Yk],[Ia_e Xa Ya]);
-DFb_Dz = subs(DFk_Dz,[Ik Xk Yk],[Ib_e Xb Yb]);
-DFc_Dz = subs(DFk_Dz,[Ik Xk Yk],[Ic_e Xc Yc]);
+DFa_Dz = subs(DFk_Dz,[Ik XK YK],[IA_eq Xa Ya]);
+DFb_Dz = subs(DFk_Dz,[Ik XK YK],[IB_eq Xb Yb]);
+DFc_Dz = subs(DFk_Dz,[Ik XK YK],[IC_eq Xc Yc]);
 
-DFa_DIa = subs(DFk_DI,[Ik Xk Yk],[Ia_e Xa Ya]);
-DFb_DIb = subs(DFk_DI,[Ik Xk Yk],[Ib_e Xb Yb]);
-DFc_DIc = subs(DFk_DI,[Ik Xk Yk],[Ic_e Xc Yc]);
+DFa_DIa = subs(DFk_DI,[Ik XK YK],[IA_eq Xa Ya]);
+DFb_DIb = subs(DFk_DI,[Ik XK YK],[IB_eq Xb Yb]);
+DFc_DIc = subs(DFk_DI,[Ik XK YK],[IC_eq Xc Yc]);
 
 
 DOphidot_Dphi     = 1/J*(Ya*DFa_Dphi + Yb*DFb_Dphi + Yc*DFc_Dphi);
@@ -130,21 +129,21 @@ CC = [DIadot_DIa DIadot_DIb DIadot_DIc;
 %%
 
 
-DIadot_DVa = 1/L;
-DIadot_DVb = 0;
-DIadot_DVc = 0;
+DIadot_DVA = 1/L;
+DIadot_DVB = 0;
+DIadot_DVC = 0;
 
-DIbdot_DVa = 0;
-DIbdot_DVb = 1/L;
-DIbdot_DVc = 0;
+DIbdot_DVA = 0;
+DIbdot_DVB = 1/L;
+DIbdot_DVC = 0;
 
-DIcdot_DVa = 0;
-DIcdot_DVb = 0;
-DIcdot_DVc = 1/L;
+DIcdot_DVA = 0;
+DIcdot_DVB = 0;
+DIcdot_DVC = 1/L;
 
-CV = [DIadot_DVa DIadot_DVb DIadot_DVc;
-      DIbdot_DVa DIbdot_DVb DIbdot_DVc;
-      DIcdot_DVa DIcdot_DVb DIcdot_DVc;];
+CV = [DIadot_DVA DIadot_DVB DIadot_DVC;
+      DIbdot_DVA DIbdot_DVB DIbdot_DVC;
+      DIcdot_DVA DIcdot_DVB DIcdot_DVC;];
   
 %%
 %La matrice Ttabc est utilisée au découplage
@@ -203,101 +202,101 @@ B = [0 0 0;
   
   
 
-%% Calcul des matrices selon l'équilibre suivant
+%% Calcul des matrices selon l'équilibre suiVAnt
 
-syms Zeq I_e I_eq
+syms Z_eq I_e I_eq
 
 
 % phi_e = 0;
 % theta_e = 0;
-% Z0_e = Zeq;
+% Z0_e = Z_eq;
 % 
-% Ia_e = I_e;
-% Ib_e = I_e;
-% Ic_e = I_e;
+% IA_eq = I_e;
+% IB_eq = I_e;
+% IC_eq = I_e;
 
 
 
 
 
-syms Xs Ys FS FP FA FB FC FAe FBe FCe
+syms Xs Ys FS FP FA FB FC FA_eq FB_eq FC_eq
 FB = FA*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb));
 FC = -FA*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ys/Yc);
 
 
-FAe = solve(FA == -FS-FP-FB-FC , FA);
-FBe = FAe*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb));
-FCe = -FAe*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ys/Yc);
+FA_eq = solve(FA == -FS-FP-FB-FC , FA);
+FB_eq = FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb));
+FC_eq = -FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ys/Yc);
 
-FAe = subs(FAe,[FS FP],[masseS*g masseP*g]);
-FBe = subs(FBe,[FS FP],[masseS*g masseP*g]);
-FCe = subs(FCe,[FS FP],[masseS*g masseP*g]);
+FA_eq = subs(FA_eq,[FS FP],[masseS*g masseP*g]);
+FB_eq = subs(FB_eq,[FS FP],[masseS*g masseP*g]);
+FC_eq = subs(FC_eq,[FS FP],[masseS*g masseP*g]);
 
 
 
-%% Calcul de Ia_e, Ib_e et Ic_e selon 
+%% Calcul de IA_eq, IB_eq et IC_eq selon 
   
-  Ia_e = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FAe)+bE1);
-  Ia_e = subs(Ia_e,Zk,Z0_e-Xk*theta_e+Yk*phi_e);
-  Ia_e = subs(Ia_e,[Xk Yk],[Xa Ya]);
+  IA_eq = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*ZK + Ae(3)*ZK.^2 + Ae(4)*ZK.^3).*(-1./(As(1) + As(2).*ZK + As(3).*ZK.^2 + As(4).*ZK.^3)+offset)-4.*(Ae(1) + Ae(2)*ZK + Ae(3)*ZK.^2 + Ae(4)*ZK.^3).*FA_eq)+bE1);
+  IA_eq = subs(IA_eq,ZK,Z0_e-XK*theta_e+YK*phi_e);
+  IA_eq = subs(IA_eq,[XK YK],[Xa Ya]);
   
-  Ib_e = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FBe)+bE1);
-  Ib_e = subs(Ib_e,Zk,Z0_e-Xk*theta_e+Yk*phi_e);
-  Ib_e = subs(Ib_e,[Xk Yk],[Xb Yb]);
+  IB_eq = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*ZK + Ae(3)*ZK.^2 + Ae(4)*ZK.^3).*(-1./(As(1) + As(2).*ZK + As(3).*ZK.^2 + As(4).*ZK.^3)+offset)-4.*(Ae(1) + Ae(2)*ZK + Ae(3)*ZK.^2 + Ae(4)*ZK.^3).*FB_eq)+bE1);
+  IB_eq = subs(IB_eq,ZK,Z0_e-XK*theta_e+YK*phi_e);
+  IB_eq = subs(IB_eq,[XK YK],[Xb Yb]);
   
-  Ic_e = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FCe)+bE1);
-  Ic_e = subs(Ic_e,Zk,Z0_e-Xk*theta_e+Yk*phi_e);
-  Ic_e = subs(Ic_e,[Xk Yk],[Xc Yc]);
+  IC_eq = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*ZK + Ae(3)*ZK.^2 + Ae(4)*ZK.^3).*(-1./(As(1) + As(2).*ZK + As(3).*ZK.^2 + As(4).*ZK.^3)+offset)-4.*(Ae(1) + Ae(2)*ZK + Ae(3)*ZK.^2 + Ae(4)*ZK.^3).*FC_eq)+bE1);
+  IC_eq = subs(IC_eq,ZK,Z0_e-XK*theta_e+YK*phi_e);
+  IC_eq = subs(IC_eq,[XK YK],[Xc Yc]);
   
   %%
-% I_e = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+((I_e^2 + be1*abs(I_e)*sign(I_e)))/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
-A_e = subs(A,[phi_e theta_e Z0_e], [0 0 Zeq]);
+% I_e = solve(FA_eq == -1/(as0+as1*Z_eq+as2*Z_eq^2+as3*Z_eq^3)+((I_e^2 + be1*abs(I_e)*sign(I_e)))/(ae0+ae1*Z_eq+ae2*Z_eq^2+ae3*Z_eq^3), I_e);
+A_e = subs(A,[phi_e theta_e Z0_e], [0 0 Z_eq]);
 
 
 A_ep = subs (A_e,I_e,I_eq);
 
 
-%% Calcul des matrices selon l'équilibre suivant
+%% Calcul des matrices selon l'équilibre suiVAnt
 
-syms Zeq I_e I_eq
+syms Z_eq I_e I_eq
 
 
 % phi_e = 0;
 % theta_e = 0;
-% Z0_e = Zeq;
+% Z0_e = Z_eq;
 % 
-% Ia_e = I_e;
-% Ib_e = I_e;
-% Ic_e = I_e;
+% IA_eq = I_e;
+% IB_eq = I_e;
+% IC_eq = I_e;
 
 
 
 
 
-syms Xs Ys FS FP FA FB FC FAe FBe FCe
+syms Xs Ys FS FP FA FB FC FA_eq FB_eq FC_eq
 FB = FA*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb));
 FC = -FA*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ys/Yc);
 
 
-FAe = solve(FA == -FS-FP-FB-FC , FA);
-FBe = FAe*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb));
-FCe = -FAe*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ys/Yc);
+FA_eq = solve(FA == -FS-FP-FB-FC , FA);
+FB_eq = FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb));
+FC_eq = -FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ys/Yc);
 
-FAe = subs(FAe,[FS FP],[masseS*g masseP*g]);
-FBe = subs(FBe,[FS FP],[masseS*g masseP*g]);
-FCe = subs(FCe,[FS FP],[masseS*g masseP*g]);
+FA_eq = subs(FA_eq,[FS FP],[masseS*g masseP*g]);
+FB_eq = subs(FB_eq,[FS FP],[masseS*g masseP*g]);
+FC_eq = subs(FC_eq,[FS FP],[masseS*g masseP*g]);
 
-% %I_a_e = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+((I_e*abs(I_e) + be1*I_e))/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
+% %I_a_e = solve(FA_eq == -1/(as0+as1*Z_eq+as2*Z_eq^2+as3*Z_eq^3)+((I_e*abs(I_e) + be1*I_e))/(ae0+ae1*Z_eq+ae2*Z_eq^2+ae3*Z_eq^3), I_e);
 % 
 % 
-% A_e = subs(A,[phi_e theta_e Z0_e Ia_e Ib_e Ic_e], [0 0 Zeq I_e I_e I_e]);
+% A_e = subs(A,[phi_e theta_e Z0_e IA_eq IB_eq IC_eq], [0 0 Z_eq I_e I_e I_e]);
 % 
 % 
 % %-----------------------negatif---------------------%
 % 
 % 
 % 
-% I_a_eq = solve(FAe == -1/(as0+as1*Zeq+as2*Zeq^2+as3*Zeq^3)+(-I_e^2 + be1*I_e)/(ae0+ae1*Zeq+ae2*Zeq^2+ae3*Zeq^3), I_e);
+% I_a_eq = solve(FA_eq == -1/(as0+as1*Z_eq+as2*Z_eq^2+as3*Z_eq^3)+(-I_e^2 + be1*I_e)/(ae0+ae1*Z_eq+ae2*Z_eq^2+ae3*Z_eq^3), I_e);
 % A_em = subs (A_e,I_e,I_eq(1));
 % 
 
@@ -306,11 +305,11 @@ FCe = subs(FCe,[FS FP],[masseS*g masseP*g]);
 %% système final 
 syms F_phi F_theta F_z Rabc I_phi I_theta I_z
 
-Fk = (Ik*abs(Ik) + be1*Ik)/(ae0 + ae1*Zk + ae2*Zk^2 + ae3*Zk^3)-1/(as0 + as1*Zk + as2*Zk^2 + as3*Zk^3);
+Fk = (Ik*abs(Ik) + be1*Ik)/(ae0 + ae1*ZK + ae2*ZK^2 + ae3*ZK^3)-1/(as0 + as1*ZK + as2*ZK^2 + as3*ZK^3);
 
-F_phi = subs (Fk,[Zk Ik],[Z0_e-Rabc*phi_e I_phi]);
-F_theta = subs (Fk,[Zk Ik],[Z0_e-Rabc*theta_e I_theta]);
-F_z = subs (Fk,[Zk Ik],[Z0_e I_z]);
+F_phi = subs (Fk,[ZK Ik],[Z0_e-Rabc*phi_e I_phi]);
+F_theta = subs (Fk,[ZK Ik],[Z0_e-Rabc*theta_e I_theta]);
+F_z = subs (Fk,[ZK Ik],[Z0_e I_z]);
 
 DF_phi_Dphi     = diff(F_phi,phi_e);
 DF_phi_Dtheta   = diff(F_phi,theta_e);
