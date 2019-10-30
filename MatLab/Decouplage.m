@@ -1,4 +1,3 @@
-
 systeme_matriciel;
 close all 
 clc
@@ -97,11 +96,15 @@ I_z_eq = 1/2.*(-sqrt(bE1^2+4.*((Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(
 I_z_eq = subs(I_z_eq,Zk,Z0_eq);
 
 
-
 V_phi_eq = R*I_phi_eq;
 V_theta_eq = R*I_theta_eq;
 V_z_eq = R*I_z_eq;
 
+%% Découplage matrice PP
+
+PP = [2*Yc*DFc_Dphi/J 0                 0              ;
+      0               3*Xb*DFa_Dtheta/J 0              ;
+      0               0                 3*DFb_Dz/masseP;]
 
 
 
