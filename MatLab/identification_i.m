@@ -1,4 +1,3 @@
-clear all
 IDENTIFICATION_MC;
 close all
 clc
