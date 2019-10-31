@@ -1,7 +1,5 @@
 %% Force magnétique
-
 clc
-clear all
 close all
 
 load('ACT_Fe_attraction.mat');

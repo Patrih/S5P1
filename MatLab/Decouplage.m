@@ -3,6 +3,11 @@ close all
 clc
 
 
+%% Découplage matrice PP
+
+PP = [2*Yc*DFc_Dphi/J 0                 0              ;
+      0               3*Xb*DFa_Dtheta/J 0              ;
+      0               0                 3*DFb_Dz/masseP;];
 %% Équation d'état de la plaque
 
 %aller meetre ne commentaire l'équilibre dans systeme_matriciel si on veut
@@ -14,6 +19,7 @@ A_plaque(1:6,1:6) = A(1:6,1:6);
 A_plaque(1:6,7:9) = A(1:6,11:13);   %
 A_plaque(7:9,1:6) = A(11:13,1:6);   %0
 A_plaque(7:9,7:9) = A(11:13,11:13); % CC
+A_plaque(4:6,1:3) = PP;
 
 B_plaque(1:6,1:3) = B(1:6,1:3);
 B_plaque(7:9,1:3) = B(11:13,1:3);
@@ -22,6 +28,7 @@ B_plaque(7:9,1:3) = B(11:13,1:3);
 C_plaque(1:3,4:9) = C(1:3,4:9);
 D_plaque(1:3,1:3) = D(1:3,1:3);
 
+% [Num_plaque_phiVa,Den_plaque_phiVa] = ss2tf(A_plaque,B_plaque,C_plaque,D_plaque,1)
 %% Équation de la sphrère
 syms A_sphere B_sphere C_sphere D_sphere
 
@@ -100,11 +107,7 @@ V_phi_eq = R*I_phi_eq;
 V_theta_eq = R*I_theta_eq;
 V_z_eq = R*I_z_eq;
 
-%% Découplage matrice PP
 
-PP = [2*Yc*DFc_Dphi/J 0                 0              ;
-      0               3*Xb*DFa_Dtheta/J 0              ;
-      0               0                 3*DFb_Dz/masseP;]
 
 
 
