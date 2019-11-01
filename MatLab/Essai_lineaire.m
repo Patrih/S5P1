@@ -20,15 +20,19 @@ syms R L
 syms A
 syms VA VB VC
 
-
+%Partons d'une force Fk = Fsk +  Fek
 Fk = (Ik*abs(Ik) + be1*Ik)/(ae0 + ae1*ZK + ae2*ZK^2 + ae3*ZK^3)-1/(as0 + as1*ZK + as2*ZK^2 + as3*ZK^3);
-
+%remplacement de la variable z par z0-Xktheta+Ykphi tel que proposé par
+%l'équation à la page 23 des specs
 Fk = subs (Fk,ZK,Z0_e-XK*theta_e+YK*phi_e);
-
-DFk_Dtheta = diff(Fk,theta_e);
+%Faire la dérivée partielle de la force FK par phi,theta,z et I
 DFk_Dphi = diff(Fk,phi_e);
+DFk_Dtheta = diff(Fk,theta_e);
 DFk_Dz = diff(Fk,Z0_e);
 DFk_DI = diff(Fk,Ik);
+
+%Remplacer les XK,Yk et Ik par les valeurs A, B et C et ce dans chaque
+%équations pour avec la dérivée partielle d'une force
 
 DFa_Dphi = subs(DFk_Dphi,[Ik XK YK],[IA_eq Xa Ya]);
 DFb_Dphi = subs(DFk_Dphi,[Ik XK YK],[IB_eq Xb Yb]);
@@ -46,23 +50,27 @@ DFa_DIa = subs(DFk_DI,[Ik XK YK],[IA_eq Xa Ya]);
 DFb_DIb = subs(DFk_DI,[Ik XK YK],[IB_eq Xb Yb]);
 DFc_DIc = subs(DFk_DI,[Ik XK YK],[IC_eq Xc Yc]);
 
+%À partir des dérivée partielles, construire les équations des moments de forces soit 
+%Ophidot = YA*Fa +YB*FB+YC*Fc+YsFs,Othetadot = -XAFA-XBFB-XCFC-XSFS et Vzdot = FA+FB+FC+FS+FG
 
 DOphidot_Dphi     = 1/J*(Ya*DFa_Dphi + Yb*DFb_Dphi + Yc*DFc_Dphi);
 DOphidot_Dtheta   = 1/J*(Ya*DFa_Dtheta + Yb*DFb_Dtheta + Yc*DFc_Dtheta);
 DOphidot_Dz       = 1/J*(Ya*DFa_Dz + Yb*DFb_Dz + Yc*DFc_Dz);
 
-DOthetadot_Dphi   = 1/J*(Xa*DFa_Dphi + Xb*DFb_Dphi + Xc*DFc_Dphi);
-DOthetadot_Dtheta = 1/J*(Xa*DFa_Dtheta + Xb*DFb_Dtheta + Xc*DFc_Dtheta);
-DOthetadot_Dz     = 1/J*(Xa*DFa_Dz + Xb*DFb_Dz + Xc*DFc_Dz);
+DOthetadot_Dphi   = - 1/J*(Xa*DFa_Dphi + Xb*DFb_Dphi + Xc*DFc_Dphi);
+DOthetadot_Dtheta = - 1/J*(Xa*DFa_Dtheta + Xb*DFb_Dtheta + Xc*DFc_Dtheta);
+DOthetadot_Dz     = - 1/J*(Xa*DFa_Dz + Xb*DFb_Dz + Xc*DFc_Dz);
 
 DVzdot_Dphi       = 1/masseP *(DFa_Dphi + DFb_Dphi + DFc_Dphi);
 DVzdot_Dtheta     = 1/masseP *(DFa_Dtheta + DFb_Dtheta + DFc_Dtheta);
 DVzdot_Dz         = 1/masseP *(DFa_Dz + DFb_Dz + DFc_Dz);
+% de cette facon on construit la matrice PP et la matrice PC
 
 PP  = [DOphidot_Dphi   DOphidot_Dtheta   DOphidot_Dz;
        DOthetadot_Dphi DOthetadot_Dtheta DOthetadot_Dz;
        DVzdot_Dphi     DVzdot_Dtheta     DVzdot_Dz];
 %%
+%La matrice PS est la suivante sorties des mêmes équations de
 
 DOphidot_DXs = 0; 
 DOphidot_DYs = masseS*g;
@@ -147,9 +155,13 @@ CV = [DIadot_DVA DIadot_DVB DIadot_DVC;
   
 %%
 %La matrice Ttabc est utilisée au découplage
-Ttabc = [Ya  Yb  Yc;
-        -Xa -Xb -Xc;
-          1   1   1]';
+Tabc = [Ya  Yb  Yc;
+       -Xa -Xb -Xc;
+         1   1   1];
+Ttabc = Tabc';
+
+
+
 
 Ttdef = [ Yd  Ye  Yf;
          -Xd -Xe -Xf;
