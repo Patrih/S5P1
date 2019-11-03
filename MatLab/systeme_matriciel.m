@@ -23,17 +23,25 @@ R = 3.6;
 L = 115e-3;
 %% calcul de l'équilibre avec sphère/horizontale
 syms FS FP FA FB FC FA_eq FB_eq FC_eq Xs_eq Ys_eq
-FB = FA*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys_eq-Xs_eq*Yc)/(Xb*Yc+Xb));
-FC = -FA*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys_eq-Xs_eq*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ys_eq/Yc);
+
+FB = FC+Ys_eq*FS/-Yb;
+FA = FC + Ys_eq*Xb/-Yb*FS+Xs_eq*FS;
 
 
-FA_eq = solve(FA == -FS-FP-FB-FC , FA);
-FB_eq = FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys_eq-Xs_eq*Yc)/(Xb*Yc+Xb));
-FC_eq = -FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys_eq-Xs_eq*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ys_eq/Yc);
+FC_eq = solve(0 == FA+FB+FC+FS+FP, FC);
+FB_eq = FC_eq+Ys_eq*FS/-Yb;
+FA_eq = FC_eq + Ys_eq*Xb/-Yb*FS+Xs_eq*FS;
+
+
+% 
+% FB_eq = FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys_eq-Xs_eq*Yc)/(Xb*Yc+Xb));
+% FC_eq = -FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys_eq-Xs_eq*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ys_eq/Yc);
 
 FA_eq = subs(FA_eq,[FS FP],[masseS*g masseP*g]);
 FB_eq = subs(FB_eq,[FS FP],[masseS*g masseP*g]);
 FC_eq = subs(FC_eq,[FS FP],[masseS*g masseP*g]);
+
+
 % Condition d'équilibre
 phi_eq = 0;
 theta_eq = 0;
@@ -64,7 +72,7 @@ DYs_eq =0;
 
 
 
-%%
+%% Remplacement dans les matrices 
 
 Fk = (Ik*abs(Ik) + bE1*Ik)/(Ae(1) + Ae(2)*Zk + Ae(3)*Zk^2 + Ae(4)*Zk^3)+(-1/(As(1) + As(2)*Zk + As(3)*Zk^2 + As(4)*Zk^3)+offset);
 
@@ -195,7 +203,7 @@ CV = [DIadot_DVa DIadot_DVb DIadot_DVc;
       DIbdot_DVa DIbdot_DVb DIbdot_DVc;
       DIcdot_DVa DIcdot_DVb DIcdot_DVc;];
   
-%% Calcul des I équilibres
+%% Calcul des courants à équilibres
 
  Ia_eq = 1/2.*(-sqrt(bE1^2+4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*(-1./(As(1) + As(2).*Zk + As(3).*Zk.^2 + As(4).*Zk.^3)+offset)-4.*(Ae(1) + Ae(2)*Zk + Ae(3)*Zk.^2 + Ae(4)*Zk.^3).*FA_eq)+bE1);
   Ia_eq = subs(Ia_eq,Zk,Z0_eq-Xk*theta_eq+Yk*phi_eq);
@@ -273,23 +281,4 @@ B = [0 0 0;
 
 
   
-
-%% Équilibre
-%------------------------------------------------------------------------------%
-%section a mettre en commentaire (Ctrl+R) si on veut les /quation avec les
-%variables Z0_eq, Xs_eq et Ys_eq
-
-%     Z0_eq Xs_eq  Ys_eq
-E = [ 0.01  -0.001 -0.001];
-
-
-A = subs (A,[Z0_eq,Xs_eq,Ys_eq],E);
-
-B = subs (B,[Z0_eq,Xs_eq,Ys_eq],E);
-
-C = subs (C,[Z0_eq,Xs_eq,Ys_eq],E);
-
-D = subs (D,[Z0_eq,Xs_eq,Ys_eq],E);
-
-%------------------------------------------------------------------------------%
 
