@@ -24,7 +24,12 @@ plot(z,Ie3)
 figure(420)
 plot(z,Ie4)
 
+%% save to .mat
 
+Ie_val = Ie3;
+z0 = z;
+save('identification_i.mat', 'Ie_val', 'z0');
 
+delete Ie_val z0
 
 

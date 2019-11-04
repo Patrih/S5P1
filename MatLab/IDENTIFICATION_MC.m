@@ -143,4 +143,7 @@ F = -1./(As(1) + As(2).*z + As(3).*z.^2 + As(4).*z.^3);
 % % Ares(round(z/di)) = Fres(round(z/di))/((452+8.2)*10^-3);
 % % end
 % % figure()
-% % plot(x,F)
+% % plot(x,F)S
+
+%% Save .mat
+save('identification_mc.mat', 'Ae', 'As');

@@ -274,8 +274,6 @@ B = [0 0 0;
       0 0 0;
       0 0 0;
       0 0 0;];
-
-
-
   
-
+%% Create .mat
+save('systeme_matriciel.mat', 'A', 'B', 'C', 'D', 'Ia_eq');
