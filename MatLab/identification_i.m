@@ -15,7 +15,7 @@ Ie2 = 1/2.*(sqrt(Be1^2-4.*polyz.*Fs+4*polyz.*Fe)-Be1); % complex
 
 
 Ie3 = 1/2.*(-sqrt(Be1^2+4.*polyz.*Fs-4.*polyz.*Fe)+Be1); %BONNE RÉPONSE :D!!!!!!
-Ie4 = 1/2.*(sqrt(Be1^2+4.*polyz.*Fs-4.*polyz.*Fe)+Be1); %suelement positif :/ meh
+Ie4 = 1/2.*(sqrt(Be1^2+4.*polyz.*Fs-4.*polyz.*Fe)+Be1); %seulement positif :/ meh
 
 
 figure(69)

@@ -75,7 +75,7 @@ PP  = [DOphidot_Dphi   DOphidot_Dtheta   DOphidot_Dz;
 DOphidot_DXs = 0; 
 DOphidot_DYs = masseS*g;
 
-DOthetadot_DXs = masseS*g;
+DOthetadot_DXs = - masseS*g;
 DOthetadot_DYs = 0;
 
 DOVzdot_DXs = 0;
@@ -92,9 +92,9 @@ DOphidot_DIa = 1/J*(Ya*DFa_DIa);
 DOphidot_DIb = 1/J*(Yb*DFb_DIb);
 DOphidot_DIc = 1/J*(Yc*DFc_DIc);
 
-DOthetadot_DIa = 1/J*(Xa*DFa_DIa);
-DOthetadot_DIb = 1/J*(Xb*DFb_DIb);
-DOthetadot_DIc = 1/J*(Xc*DFc_DIc);
+DOthetadot_DIa = - 1/J*(Xa*DFa_DIa);
+DOthetadot_DIb = - 1/J*(Xb*DFb_DIb);
+DOthetadot_DIc = - 1/J*(Xc*DFc_DIc);
 
 DOVzdot_DIa = 1/masseP*(DFa_DIa);
 DOVzdot_DIb = 1/masseP*(DFb_DIb);
@@ -232,13 +232,14 @@ syms Z_eq I_e I_eq
 
 
 syms Xs Ys FS FP FA FB FC FA_eq FB_eq FC_eq
-FB = FA*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb));
-FC = -FA*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ys/Yc);
+
+FB = FC+Ys_eq*FS/-Yb;
+FA = FC + Ys_eq*Xb/-Yb*FS+Xs_eq*FS;
 
 
-FA_eq = solve(FA == -FS-FP-FB-FC , FA);
-FB_eq = FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb));
-FC_eq = -FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys-Xs*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ys/Yc);
+FC_eq = solve(0 == FA+FB+FC+FS+FP, FC);
+FB_eq = FC_eq+Ys_eq*FS/-Yb;
+FA_eq = FC_eq + Ys_eq*Xb/-Yb*FS+Xs_eq*FS;
 
 FA_eq = subs(FA_eq,[FS FP],[masseS*g masseP*g]);
 FB_eq = subs(FB_eq,[FS FP],[masseS*g masseP*g]);

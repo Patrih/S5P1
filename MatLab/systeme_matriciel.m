@@ -33,9 +33,6 @@ FB_eq = FC_eq+Ys_eq*FS/-Yb;
 FA_eq = FC_eq + Ys_eq*Xb/-Yb*FS+Xs_eq*FS;
 
 
-% 
-% FB_eq = FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb))+FS*((Xc*Ys_eq-Xs_eq*Yc)/(Xb*Yc+Xb));
-% FC_eq = -FA_eq*((Xc*Ya-Xa*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ya/Yc)-FS*((Xc*Ys_eq-Xs_eq*Yc)/(Xb*Yc+Xb)*Yb/Yc+Ys_eq/Yc);
 
 FA_eq = subs(FA_eq,[FS FP],[masseS*g masseP*g]);
 FB_eq = subs(FB_eq,[FS FP],[masseS*g masseP*g]);
