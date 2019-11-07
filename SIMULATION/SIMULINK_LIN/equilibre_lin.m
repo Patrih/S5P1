@@ -10,14 +10,8 @@ run ('systeme_matriciel') % Contient identification MC
 %section a mettre en commentaire (Ctrl+R) si on veut les équations avec les
 %variables Z0_eq, Xs_eq et Ys_eq
 
-%     Z0_eq Xs_eq  Ys_eq
-dr = 100;
-% % for x = linspace(-Rabc_ini,Rabc_ini,100)
-    for y = linspace(-Rabc_ini,Rabc_ini,dr) 
-
- E = [ 0.005 0 y];
-
-% E = [0.020 0 0]
+%     Z0_eq   Xs_eq  Ys_eq
+ E =  [0.015   0       0];
 
 A = eval(subs (A,[Z0_eq,Xs_eq,Ys_eq],E));
 
@@ -52,18 +46,4 @@ VE_eq = eval(subs (VE_eq,[Z0_eq,Xs_eq,Ys_eq],E));
 
 sorties_eq = eval(subs (sorties_eq,[Z0_eq,Xs_eq,Ys_eq],E));
 
-
-VA_EQ(floor(dr/2*y/Rabc_ini+dr/2+1))= entrees_eq(1);
-
-VB_EQ(floor(dr/2*y/Rabc_ini+dr/2+1))= entrees_eq(2);
-
-VC_EQ(floor(dr/2*y/Rabc_ini+dr/2+1))= entrees_eq(3);
-
-    end
-    sda = -Rabc_ini:Rabc_ini*2/dr:Rabc_ini;
-plot ( sda,VA_EQ)
-hold on 
-plot (sda, VB_EQ)
-plot (sda, VC_EQ)
-legend('va','vb','vc')
 

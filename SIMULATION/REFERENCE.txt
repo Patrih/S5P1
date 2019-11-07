@@ -1,0 +1,5 @@
+DOCUMENTS:
+
+SIMULINK_LIN : Template préliminaire de la simulation pour le systeme non-lineaire non-decouple
+	(sans utilisation du bloc ABCD)
+SIMULINK_NL : Simulation foncitonelle du système non-linéaire
