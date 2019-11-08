@@ -11,7 +11,7 @@ run ('systeme_matriciel') % Contient identification MC
 %variables Z0_eq, Xs_eq et Ys_eq
 
 %     Z0_eq   Xs_eq  Ys_eq
- E =  [0.015   0       0];
+ E =  [0.015    0     0];
 
 A = eval(subs (A,[Z0_eq,Xs_eq,Ys_eq],E));
 
@@ -45,5 +45,9 @@ entrees_eq = eval(subs (entrees_eq,[Z0_eq,Xs_eq,Ys_eq],E));
 VE_eq = eval(subs (VE_eq,[Z0_eq,Xs_eq,Ys_eq],E));
 
 sorties_eq = eval(subs (sorties_eq,[Z0_eq,Xs_eq,Ys_eq],E));
+
+
+
+
 
 

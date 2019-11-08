@@ -73,9 +73,9 @@ PP  = [DOphidot_Dphi   DOphidot_Dtheta   DOphidot_Dz;
 %La matrice PS est la suivante sorties des mêmes équations de
 
 DOphidot_DXs = 0; 
-DOphidot_DYs = masseS*g;
+DOphidot_DYs = masseS*g/J;
 
-DOthetadot_DXs = - masseS*g;
+DOthetadot_DXs = - masseS*g/J;
 DOthetadot_DYs = 0;
 
 DOVzdot_DXs = 0;
@@ -231,7 +231,7 @@ syms Z_eq I_e I_eq
 
 
 
-syms Xs Ys FS FP FA FB FC FA_eq FB_eq FC_eq
+syms Xs_eq Ys_eq FS FP FA FB FC FA_eq FB_eq FC_eq
 
 FB = FC+Ys_eq*FS/-Yb;
 FA = FC + Ys_eq*Xb/-Yb*FS+Xs_eq*FS;
@@ -239,7 +239,7 @@ FA = FC + Ys_eq*Xb/-Yb*FS+Xs_eq*FS;
 
 FC_eq = solve(0 == FA+FB+FC+FS+FP, FC);
 FB_eq = FC_eq+Ys_eq*FS/-Yb;
-FA_eq = FC_eq + Ys_eq*Xb/-Yb*FS+Xs_eq*FS;
+FA_eq =  FC_eq + FS*(Xs_eq*Yb-Ys_eq*Xb)/(2*Xb*Yb);
 
 FA_eq = subs(FA_eq,[FS FP],[masseS*g masseP*g]);
 FB_eq = subs(FB_eq,[FS FP],[masseS*g masseP*g]);
