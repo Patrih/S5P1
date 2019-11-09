@@ -25,7 +25,7 @@ L = 115e-3;
 syms FS FP FA FB FC FA_eq FB_eq FC_eq Xs_eq Ys_eq
 
 FB = FC+Ys_eq*FS/-Yb;
-FA = FC + Ys_eq*Xb/-Yb*FS+Xs_eq*FS;
+FA = FC + FS*(Xs_eq*Yb-Ys_eq*Xb)/(2*Xb*Yb);
 
 
 FC_eq = solve(0 == FA+FB+FC+FS+FP, FC);

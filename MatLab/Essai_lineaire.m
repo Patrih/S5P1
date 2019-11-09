@@ -234,7 +234,7 @@ syms Z_eq I_e I_eq
 syms Xs_eq Ys_eq FS FP FA FB FC FA_eq FB_eq FC_eq
 
 FB = FC+Ys_eq*FS/-Yb;
-FA = FC + Ys_eq*Xb/-Yb*FS+Xs_eq*FS;
+FA = FC + FS*(Xs_eq*Yb-Ys_eq*Xb)/(2*Xb*Yb);
 
 
 FC_eq = solve(0 == FA+FB+FC+FS+FP, FC);
