@@ -1,26 +1,24 @@
-
-IDENTIFICATION_MC;
+clear all
 close all
 clc
 
-syms Fk
-syms Ik Zk
-syms Xk Yk
-syms Ia_eq Ib_eq Ic_eq
+% Creation du systeme matriciel
+% 
+%     Fait par : 
+%     Ce qu'il reste a faire :
+%         -
+%         -
+%         -
+%         -
+%         
+%     
 
-Rabc_ini = 95.2e-3; %mm
-Xa =  Rabc_ini;
-Ya =  0;
-Xb = -Rabc_ini*sind(30);
-Yb =  Rabc_ini*cosd(30);
-Xc = -Rabc_ini*sind(30);
-Yc = -Rabc_ini*cosd(30);
-masseP = 442e-3;
-masseS = 8e-3;
-J = 1347e-6;
-g = 9.81;
-R = 3.6;
-L = 115e-3;
+%% Data
+
+load('Identification_MC')
+load('Spec')
+
+
 %% calcul de l'équilibre avec sphère/horizontale
 syms FS FP FA FB FC FA_eq FB_eq FC_eq Xs_eq Ys_eq
 
@@ -276,4 +274,6 @@ B = [0 0 0;
       0 0 0;];
   
 %% Create .mat
-save('systeme_matriciel.mat', 'A', 'B', 'C', 'D', 'Ia_eq');
+
+% save('systeme_matriciel.mat', 'A', 'B', 'C', 'D', 'Ia_eq');
+save('Data/systeme_matriciel','DFc_Dphi', 'DFa_Dtheta', 'DFb_Dz', 'A', 'B', 'C', 'D', 'Z0_eq', 'Zk', 'Ia_eq');

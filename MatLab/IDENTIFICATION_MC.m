@@ -1,9 +1,27 @@
-%% Force magnétique
+clear all;
 clc
 close all
 
+% Identification du MC
+% 
+%     Fait par : 
+%     Ce qu'il reste a faire :
+%         -
+%         -
+%         -
+%         -
+%         
+%     
+
+%% Data
+
 load('ACT_Fe_attraction.mat');
 load('ACT_Fs');
+
+
+%% Force magnétique
+
+
 % Array to choose the dissplayed figures ; a one in the position displays
 %Figure  1 2 3 4 5 6 7 8 9 
 plots = [0 0 0 0 0 0 0 0 0];
@@ -146,4 +164,4 @@ F = -1./(As(1) + As(2).*z + As(3).*z.^2 + As(4).*z.^3);
 % % plot(x,F)S
 
 %% Save .mat
-save('identification_mc.mat', 'Ae', 'As');
+save('Data/Identification_MC.mat', 'bE1', 'Ae', 'As', 'offset');

@@ -1,7 +1,23 @@
 clear all 
-IDENTIFICATION_MC;
 close all
 clc
+
+% Essai lineaire
+% 
+%     Fait par : 
+%     Ce qu'il reste a faire :
+%         -
+%         -
+%         -
+%         -
+%         
+%     
+
+
+%% Data
+
+load('Identification_MC')
+
 %% Essai lineraire
 
 syms phi_e theta_e Z0_e

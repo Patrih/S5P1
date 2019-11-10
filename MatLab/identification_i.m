@@ -1,6 +1,24 @@
-IDENTIFICATION_MC;
+clear all
 close all
 clc
+
+
+% Identification du i
+% 
+%     Fait par : 
+%     Ce qu'il reste a faire :
+%         -
+%         -
+%         -
+%         -
+%         
+%     
+
+
+%% Data
+
+load('Identification_MC')
+
 
 Be1 = 13.029359254409743;
 Fe = -9.8*0.4602/3;
@@ -28,8 +46,6 @@ plot(z,Ie4)
 
 Ie_val = Ie3;
 z0 = z;
-save('identification_i.mat', 'Ie_val', 'z0');
-
-delete Ie_val z0
+save('Data/identification_i.mat', 'Ie_val', 'z0');
 
 

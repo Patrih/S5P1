@@ -3,9 +3,24 @@ clear all;
 close all;
 clc;
 
-load('systeme_matriciel.mat');
-load('identification_mc.mat');
-load('identification_i.mat');
+% SC
+% 
+%     Fait par : 
+%     Ce qu'il reste a faire :
+%         -
+%         -
+%         -
+%         -
+%         
+%     
+
+
+%% Data
+
+load('systeme_matriciel');
+load('identification_mc');
+load('identification_i');
+
 
 bE1 = 13.029359254409743;
 

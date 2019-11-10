@@ -1,7 +1,22 @@
-Decouplage;
+clear all
 close all
 clc
 
+% Fonction de transfert
+% 
+%     Fait par : 
+%     Ce qu'il reste a faire :
+%         -
+%         -
+%         -
+%         -
+%         
+%     
+
+
+%% Data
+
+load('Decouplage')
 
 %% système axe phi
 

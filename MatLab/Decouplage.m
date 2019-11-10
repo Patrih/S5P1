@@ -1,6 +1,23 @@
-systeme_matriciel;
+clear all
 close all 
 clc
+
+
+% Calcul du decouplage
+% 
+%     Fait par : 
+%     Ce qu'il reste a faire :
+%         -
+%         -
+%         -
+%         -
+%         
+%     
+
+%% Data
+load('Identification_MC')
+load('systeme_matriciel')
+load('Spec')
 
 
 %% Découplage matrice PP
@@ -107,6 +124,10 @@ V_phi_eq = R*I_phi_eq;
 V_theta_eq = R*I_theta_eq;
 V_z_eq = R*I_z_eq;
 
+
+%% Save
+
+save('Data/Decouplage.mat', 'A_plaque');
 
 
 
