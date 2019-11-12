@@ -20,16 +20,17 @@ z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
 tfin = 50;
 
 %initialisation
-bancEssaiConstantes
+addpath ../../../Matlab/CONSTANTES
+run ('CONSTANTES.m')
 %bancessai_ini  %faites tous vos calculs de modele ici
 
 %Calcul des compensateurs
 %iniCTL_ver4    %Calculez vos compensateurs ici
 
 %simulation
-open_system('DYNctl_ver4_etud_obfusc')
-set_param('DYNctl_ver4_etud_obfusc','AlgebraicLoopSolver','LineSearch')
-sim('DYNctl_ver4_etud_obfusc')
+open_system('simulation_NL_or')
+set_param('simulation_NL_or','AlgebraicLoopSolver','LineSearch')
+sim('simulation_NL_or')
 
 %affichage
 %trajectoires

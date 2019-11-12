@@ -1,4 +1,17 @@
-clc
+clc 
+clear all
+close all
+addpath('Data')
+
+%Fait par : PHIL
+%Date : 2019-11-11
+%Reste a faire: 
+% - 
+% - 
+% - 
+
+%% Paramètres moindre carré
+disp("---------------------Paramètres moindre carré--------------------------")
 
 g   = 9.81;
 
@@ -53,8 +66,16 @@ yvec_DEF = [YD, YE, YF]';
 TDEF = [yvec_DEF'; -xvec_DEF'; ones(1,3)];
 TDEF_inv = inv(TDEF);
 
-% Paramètres inertiels
-% --------------------
+save('Data/Constantes_moindre_carré')
+
+clear variables
+disp(' ')
+disp(' ')
+
+%% Paramètres inertiels
+disp("-----------------------Paramètres inertiels----------------------------")
+
+g   = 9.81;
 
 % Données mises à jour le 10 juillet 2015
 % Sphère
@@ -69,10 +90,12 @@ mSg   = mS*g;         % N - poids de la sphère
 
 % Plaque
 mP = 442e-03;     % kg
-Jx =  1169e-06;  % kg m^2
+Jx =  1347e-06;  % kg m^2
 Jy =  Jx;             % kg m^2
 Jz = 2329e-06;  % kg m^2
 
+
+sig = 1;
 mtot = mP + sig*mS;   % kg - mase totale plaque + sphère
 
 % Simulation
@@ -89,27 +112,8 @@ LB =  LL;
 RC =  RR;
 LC =  LL;
 
-% Paramètres moindre carré
-% --------------------
+save('Data/Constantes_inertiels')
 
-be1 = 13.029359254409743;
-
-as0 = 0.040978814093345;
-as1 = 10.275913216141866;
-as2 = -4.149770657537117e+02;
-as3 = 5.763371762601417e+03;
-
-ae0 = 1.346257119209160;
-ae1 = 3.490773781399032e+02;
-ae2 = 1.450384791542791e+03;
-ae3 = 7.033442113266084e+05;
-
-offset = 7.563899999998686;
-
-
-
-
-
-
-
-
+clear variables
+disp(' ')
+disp(' ')

@@ -2,8 +2,9 @@ close all
 clear all
 clc
 
+
+
 % Position à l'équilibre de la sphère (pour tests statiques)
-sig = 1.0;         % Présence (1) ou non (0) de la sphère
 xSeq = 0.000;      % Position x de la sphère à l'équilibre en metres
 ySeq = 0.000;      % Position y de la sphère à l'équilibre en metres
 
@@ -20,16 +21,17 @@ z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
 tfin = 50;
 
 %initialisation
-bancEssaiConstantes
+addpath ../../../Matlab/CONSTANTES
+run ('CONSTANTES.m')
 %bancessai_ini  %faites tous vos calculs de modele ici
 
 %Calcul des compensateurs
 %iniCTL_ver4    %Calculez vos compensateurs ici
 
 %simulation
-open_system('DYNctl_ver4_etud_obfusc')
-set_param('DYNctl_ver4_etud_obfusc','AlgebraicLoopSolver','LineSearch')
-sim('DYNctl_ver4_etud_obfusc')
+open_system('simulation_NL_modif')
+set_param('simulation_NL_modif','AlgebraicLoopSolver','LineSearch')
+sim('simulation_NL_modif')
 
 %affichage
 %trajectoires

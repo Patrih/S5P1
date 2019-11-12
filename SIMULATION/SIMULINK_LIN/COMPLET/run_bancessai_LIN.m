@@ -20,16 +20,19 @@ z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
 tfin = 50;
 
 %initialisation
-bancEssaiConstantes
-%bancessai_ini  %faites tous vos calculs de modele ici
+addpath ../../../Matlab
+run ('equilibre.m')
+
+%------- AJOUTER LES INITIALISATIONS DES MATRICES ABCD ICI ----------------
+
 
 %Calcul des compensateurs
 %iniCTL_ver4    %Calculez vos compensateurs ici
 
 %simulation
-open_system('DYNctl_ver4_etud_obfusc')
-set_param('DYNctl_ver4_etud_obfusc','AlgebraicLoopSolver','LineSearch')
-sim('DYNctl_ver4_etud_obfusc')
+open_system('simulation_LIN')
+set_param('simulation_LIN','AlgebraicLoopSolver','LineSearch')
+sim('simulation_LIN')
 
 %affichage
 %trajectoires
