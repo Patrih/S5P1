@@ -1,17 +1,6 @@
-clc 
-clear all
-close all
-addpath('Data')
-
-%Fait par : PHIL
-%Date : 2019-11-11
-%Reste a faire: 
-% - 
-% - 
-% - 
-
-%% Paramètres moindre carré
-disp("---------------------Paramètres moindre carré--------------------------")
+% Paramètres moindre carré
+% --------------------
+run ('IDENTIFICATION_MC.m')
 
 g   = 9.81;
 
@@ -66,16 +55,8 @@ yvec_DEF = [YD, YE, YF]';
 TDEF = [yvec_DEF'; -xvec_DEF'; ones(1,3)];
 TDEF_inv = inv(TDEF);
 
-save('Data/Constantes_moindre_carré')
-
-clear variables
-disp(' ')
-disp(' ')
-
-%% Paramètres inertiels
-disp("-----------------------Paramètres inertiels----------------------------")
-
-g   = 9.81;
+% Paramètres inertiels
+% --------------------
 
 % Données mises à jour le 10 juillet 2015
 % Sphère
@@ -112,8 +93,4 @@ LB =  LL;
 RC =  RR;
 LC =  LL;
 
-save('Data/Constantes_inertiels')
-
-clear variables
-disp(' ')
-disp(' ')
+disp('Constantes calculées')

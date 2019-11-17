@@ -1,18 +1,5 @@
-clc 
-clear all
-close all
-addpath('Data')
+%% Linearisation
 
-%Fait par : PHIL
-%Date : 2019-11-11
-%Reste a faire: 
-% - 
-% - 
-% - 
-
-
-%% Syms
-disp("--------------------------------Syms-----------------------------------")
 
 syms Axeq Ayeq Pzeq
 syms Fk
@@ -28,14 +15,6 @@ syms IA_eq IB_eq IC_eq
 syms Xs Ys
 syms RA RB RC LA LB LC
 syms VA VB VC
-
-save('Data/Linearisation');
-
-disp(' ')
-disp(' ')
-
-%% PP
-disp("---------------------------------PP------------------------------------")
 
 %Partons d'une force Fk = Fsk +  Fek
 Fk = (Ik*abs(Ik) + Be*Ik)/(Ae1 + Ae2*ZK + Ae3*ZK^2 + Ae4*ZK^3)-1/(As1 + As2*ZK + As3*ZK^2 + As4*ZK^3);
@@ -86,13 +65,7 @@ DVzdot_Dz         = 1/(mP+mS) *(DFa_Dz + DFb_Dz + DFc_Dz);
 PP  = [DOphidot_Dphi   DOphidot_Dtheta   DOphidot_Dz;
        DOthetadot_Dphi DOthetadot_Dtheta DOthetadot_Dz;
        DVzdot_Dphi     DVzdot_Dtheta     DVzdot_Dz];
-   
-save('Data/Linearisation','PP','-append');
-
-disp(' ')
-disp(' ')
-%% PS
-disp("---------------------------------PS------------------------------------")
+%%
 %La matrice PS est la suivante sorties des mêmes équations de
 
 DOphidot_DXs = 0; 
@@ -108,13 +81,8 @@ PS = [DOphidot_DXs   DOphidot_DYs;
       DOthetadot_DXs DOthetadot_DYs;
       DOVzdot_DXs    DOVzdot_DYs];
 
-save('Data/Linearisation','PS','-append');
-
-disp(' ')
-disp(' ')
-
-%% PC
-disp("---------------------------------PC------------------------------------")
+  
+%%
 
 DOphidot_DIa = 1/Jx*(YA*DFa_DIa);
 DOphidot_DIb = 1/Jx*(YB*DFb_DIb);
@@ -124,21 +92,14 @@ DOthetadot_DIa = - 1/Jy*(XA*DFa_DIa);
 DOthetadot_DIb = - 1/Jy*(XB*DFb_DIb);
 DOthetadot_DIc = - 1/Jy*(XC*DFc_DIc);
 
-DOVzdot_DIa = 1/mP*(DFa_DIa);
-DOVzdot_DIb = 1/mP*(DFb_DIb);
-DOVzdot_DIc = 1/mP*(DFc_DIc);
+DOVzdot_DIa = 1/(mP+mS)*(DFa_DIa);
+DOVzdot_DIb = 1/(mP+mS)*(DFb_DIb);
+DOVzdot_DIc = 1/(mP+mS)*(DFc_DIc);
 
 PC = [DOphidot_DIa   DOphidot_DIb   DOphidot_DIc;
       DOthetadot_DIa DOthetadot_DIb DOthetadot_DIc;
       DOVzdot_DIa    DOVzdot_DIb    DOVzdot_DIc;];
-  
-save('Data/Linearisation','PC','-append');
-
-disp(' ')
-disp(' ')
-
-%% SP
-disp("---------------------------------SP------------------------------------")
+%%
 
 DVxs_Dphi = 0;
 DVxs_Dtheta = -5*g/7; 
@@ -150,14 +111,8 @@ DVys_Dz = 0;
 
 SP = [DVxs_Dphi DVxs_Dtheta DVxs_Dz;
       DVys_Dphi DVys_Dtheta DVys_Dz];
-
-save('Data/Linearisation','SP','-append');
-
-disp(' ')
-disp(' ')
-
-%% CC
-disp("---------------------------------CC------------------------------------")
+  
+%%
 
 DIadot_DIa = -RA/LA;
 DIadot_DIb = 0;
@@ -174,13 +129,9 @@ DIcdot_DIc = -RC/LC;
 CC = [DIadot_DIa DIadot_DIb DIadot_DIc;
       DIbdot_DIa DIbdot_DIb DIbdot_DIc;
       DIcdot_DIa DIcdot_DIb DIcdot_DIc;];
-  
-save('Data/Linearisation','CC','-append');
 
-disp(' ')
-disp(' ')
-%% CV
-disp("---------------------------------CV------------------------------------")
+%%
+
 
 DIadot_DVA = 1/LA;
 DIadot_DVB = 0;
@@ -198,61 +149,27 @@ CV = [DIadot_DVA DIadot_DVB DIadot_DVC;
       DIbdot_DVA DIbdot_DVB DIbdot_DVC;
       DIcdot_DVA DIcdot_DVB DIcdot_DVC;];
   
-save('Data/Linearisation','CV','-append');
+%% Section découplage
 
-disp(' ')
-disp(' ')  
-%% A B C D
-disp("-------------------------------A B C D---------------------------------")
+PP_dec = [2*YC*DFc_Dphi/Jx 0                 0              ;
+          0               3*XB*DFa_Dtheta/Jy 0              ;
+          0               0                  3*DFb_Dz/(mP+mS);];
 
-A = [ 0 0 0 1 0 0 0 0 0 0 0 0 0;
-      0 0 0 0 1 0 0 0 0 0 0 0 0;
-      0 0 0 0 0 1 0 0 0 0 0 0 0;
-      PP(1,1) PP(1,2) PP(1,3) 0 0 0 PS(1,1) PS(1,2) 0 0 PC(1,1) PC(1,2) PC(1,3);
-      PP(2,1) PP(2,2) PP(2,3) 0 0 0 PS(2,1) PS(2,2) 0 0 PC(2,1) PC(2,2) PC(2,3);
-      PP(3,1) PP(3,2) PP(3,3) 0 0 0 PS(3,1) PS(3,2) 0 0 PC(3,1) PC(3,2) PC(3,3);
-      0 0 0 0 0 0 0 0 1 0 0 0 0;
-      0 0 0 0 0 0 0 0 0 1 0 0 0;
-      SP(1,1) SP(1,2) SP(1,3) 0 0 0 0 0 0 0 0 0 0;
-      SP(2,1) SP(2,2) SP(2,3) 0 0 0 0 0 0 0 0 0 0;
-      0 0 0 0 0 0 0 0 0 0 CC(1,1) CC(1,2) CC(1,3);
-      0 0 0 0 0 0 0 0 0 0 CC(2,1) CC(2,2) CC(2,3);
-      0 0 0 0 0 0 0 0 0 0 CC(3,1) CC(3,2) CC(3,3)];
+PC_dec = [DFa_DIa/Jx      0                  0               ;
+          0               DFb_DIb/Jy         0               ;
+          0               0                  DFc_DIc/(mP+mS) ;];
   
-B = [0 0 0;
-     0 0 0;
-     0 0 0;
-     0 0 0;
-     0 0 0;
-     0 0 0;
-     0 0 0;
-     0 0 0;
-     0 0 0;
-     0 0 0;
-     CV(1,1) CV(1,2) CV(1,3);
-     CV(2,1) CV(2,2) CV(2,3);
-     CV(3,1) CV(3,2) CV(3,3)];
- 
- C = [YD -XD 1 0 0 0 0 0 0 0 0 0 0;
-      YE -XE 1 0 0 0 0 0 0 0 0 0 0;
-      YF -XF 1 0 0 0 0 0 0 0 0 0 0;
-      0 0 0 0 0 0 1 0 0 0 0 0 0;
-      0 0 0 0 0 0 0 1 0 0 0 0 0;
-      0 0 0 0 0 0 0 0 1 0 0 0 0;
-      0 0 0 0 0 0 0 0 0 1 0 0 0;];
-  
- D = [0 0 0;
-      0 0 0;
-      0 0 0;
-      0 0 0;
-      0 0 0;
-      0 0 0;
-      0 0 0;];
-  
+PS_dec = zeros([3,3]);
 
-save('Data/Linearisation','A','B','C','D','-append');
+SP_dec = SP;
 
-disp(' ')
-disp(' ')  
+CC_dec = CC;
+
+CV_dec = CV;
+
+
+
+disp('Linéarisation et découplage faits')
+  
   
   
