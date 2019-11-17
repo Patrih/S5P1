@@ -1,6 +1,17 @@
-% Paramètres moindre carré
-% --------------------
-run ('IDENTIFICATION_MC.m')
+clc 
+clear all
+close all
+addpath('Data')
+
+%Fait par : JB, Phil, LD
+%Date : 2019-11-11
+%Reste a faire: 
+% - 
+% - 
+% - 
+%% Paramèetres constants
+disp("--------------------Paramètres Constants------------------------")
+
 
 g   = 9.81;
 
@@ -56,7 +67,7 @@ TDEF = [yvec_DEF'; -xvec_DEF'; ones(1,3)];
 TDEF_inv = inv(TDEF);
 
 % Paramètres inertiels
-% --------------------
+disp("--------------------Paramètres inertiels------------------------")
 
 % Données mises à jour le 10 juillet 2015
 % Sphère
@@ -92,5 +103,7 @@ RB =  RR;
 LB =  LL;
 RC =  RR;
 LC =  LL;
+disp("-----------------------------Save-------------------------------")
+save('Data/Constantes')
+disp("------------------------End CONSTANTES--------------------------")
 
-disp('Constantes calculées')

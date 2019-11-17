@@ -1,4 +1,17 @@
+clc 
+clear all
+close all
+addpath('Data')
+
+%Fait par : PHIL
+%Date : 2019-11-11
+%Reste a faire: 
+% - 
+% - 
+% - 
+
 %% Linearisation
+disp("--------------------------------Syms-----------------------------------")
 
 
 syms Axeq Ayeq Pzeq
@@ -16,6 +29,8 @@ syms Xs Ys
 syms RA RB RC LA LB LC
 syms VA VB VC
 
+%% dérivées utiles 
+disp("-------------------------------Dérivées--------------------------------")
 %Partons d'une force Fk = Fsk +  Fek
 Fk = (Ik*abs(Ik) + Be*Ik)/(Ae1 + Ae2*ZK + Ae3*ZK^2 + Ae4*ZK^3)-1/(As1 + As2*ZK + As3*ZK^2 + As4*ZK^3);
 %remplacement de la variable z par z0-Xktheta+Ykphi tel que proposé par
@@ -45,6 +60,8 @@ DFc_Dz = subs(DFk_Dz,[Ik XK YK],[IC_eq XC YC]);
 DFa_DIa = subs(DFk_DI,[Ik XK YK],[IA_eq XA YA]);
 DFb_DIb = subs(DFk_DI,[Ik XK YK],[IB_eq XB YB]);
 DFc_DIc = subs(DFk_DI,[Ik XK YK],[IC_eq XC YC]);
+%% PP 
+disp("---------------------------------PP------------------------------------")
 
 %À partir des dérivée partielles, construire les équations des moments de forces soit 
 %Ophidot = YA*Fa +YB*FB+YC*Fc+YsFs, Othetadot = -XAFA-XBFB-XCFC-XSFS et Vzdot = FA+FB+FC+FS+FG
@@ -65,7 +82,13 @@ DVzdot_Dz         = 1/(mP+mS) *(DFa_Dz + DFb_Dz + DFc_Dz);
 PP  = [DOphidot_Dphi   DOphidot_Dtheta   DOphidot_Dz;
        DOthetadot_Dphi DOthetadot_Dtheta DOthetadot_Dz;
        DVzdot_Dphi     DVzdot_Dtheta     DVzdot_Dz];
-%%
+   
+   
+
+
+%% PS
+disp("---------------------------------PS------------------------------------")
+
 %La matrice PS est la suivante sorties des mêmes équations de
 
 DOphidot_DXs = 0; 
@@ -81,8 +104,10 @@ PS = [DOphidot_DXs   DOphidot_DYs;
       DOthetadot_DXs DOthetadot_DYs;
       DOVzdot_DXs    DOVzdot_DYs];
 
+
   
-%%
+%% PC
+disp("---------------------------------PC------------------------------------")
 
 DOphidot_DIa = 1/Jx*(YA*DFa_DIa);
 DOphidot_DIb = 1/Jx*(YB*DFb_DIb);
@@ -99,7 +124,9 @@ DOVzdot_DIc = 1/(mP+mS)*(DFc_DIc);
 PC = [DOphidot_DIa   DOphidot_DIb   DOphidot_DIc;
       DOthetadot_DIa DOthetadot_DIb DOthetadot_DIc;
       DOVzdot_DIa    DOVzdot_DIb    DOVzdot_DIc;];
-%%
+
+%% SP
+disp("---------------------------------SP------------------------------------")
 
 DVxs_Dphi = 0;
 DVxs_Dtheta = -5*g/7; 
@@ -112,8 +139,8 @@ DVys_Dz = 0;
 SP = [DVxs_Dphi DVxs_Dtheta DVxs_Dz;
       DVys_Dphi DVys_Dtheta DVys_Dz];
   
-%%
-
+%% CC
+disp("---------------------------------CC------------------------------------")
 DIadot_DIa = -RA/LA;
 DIadot_DIb = 0;
 DIadot_DIc = 0;
@@ -130,8 +157,8 @@ CC = [DIadot_DIa DIadot_DIb DIadot_DIc;
       DIbdot_DIa DIbdot_DIb DIbdot_DIc;
       DIcdot_DIa DIcdot_DIb DIcdot_DIc;];
 
-%%
-
+%% CV
+disp("---------------------------------CV------------------------------------")
 
 DIadot_DVA = 1/LA;
 DIadot_DVB = 0;
@@ -150,7 +177,7 @@ CV = [DIadot_DVA DIadot_DVB DIadot_DVC;
       DIcdot_DVA DIcdot_DVB DIcdot_DVC;];
   
 %% Section découplage
-
+disp("--------------------------Section Découplage---------------------------")
 PP_dec = [2*YC*DFc_Dphi/Jx 0                 0              ;
           0               3*XB*DFa_Dtheta/Jy 0              ;
           0               0                  3*DFb_Dz/(mP+mS);];
@@ -166,10 +193,8 @@ SP_dec = SP;
 CC_dec = CC;
 
 CV_dec = CV;
+disp("---------------------------------Save----------------------------------")
+save('Data/Linearisation');
 
-
-
-disp('Linéarisation et découplage faits')
-  
-  
+disp("---------------------------End Linearistion----------------------------")  
   

@@ -1,11 +1,31 @@
+clc 
+clear all
+close all
+addpath('Data')
+
+%Fait par : LD/Louis
+%Date : 2019-11-11
+%Reste a faire: 
+% - Rien
+% - 
+% - 
+
 %% Force magnétique
 
-load('ACT_Fe_attraction.mat');
-load('ACT_Fs');
-% Array to choose the dissplayed figures ; a one in the position displays
-%Figure  1 2 3 4 5 6 7 8 9 
+load('Data/ACT_Fe_attraction.mat');
+load('Data/ACT_Fs');
+% 1     Fs data
+% 2     Fs vs sim
+% 3     Error of Fs vs sim
+% 4     Fe vs Moindres carrés m1A
+% 5     Error of Fe vs Moindres carrés m1A
+% 6     Fe vs Moindres carrés m2A
+% 7     Error of Fe vs Moindres carrés m2A
+% 8     Comparaison m1A m2A
+% 9
+%Figure  1 2 3 4 5 6 7 8 9
 plots = [0 0 0 0 0 0 0 0 0];
-
+disp("--------------------------Original Data--------------------------------")
 %figures 1 : Original data
 if plots(1)
     figure()
@@ -17,6 +37,7 @@ if plots(1)
 end
    
 %% Approximating Fs
+disp("-------------------------Aproximating Fs-------------------------------")
 % Building the P matrix and the Y vector
 nbr_value = 110;
 
@@ -49,9 +70,9 @@ if plots(3)
     xlabel('Courant (A)')
 end
 
-
-
 %% Approximating Fe
+disp("-------------------------Aproximating Fe-------------------------------")
+
 % Using m1A
 iK = -1;
 Be = 13.029359254409743;
@@ -113,45 +134,15 @@ if plots(8)
     legend('Erreur à -1A' , 'Erreur à -2A')
     hold off
 end
-disp('Moindre carré fait');
 
 %% Errors
+disp("------------------------------Error------------------------------------")
 
-%erreurs à la main qui causent des erreurs d'approximation pour r^2 (r^2>1)
+[r2_Fe1,rmse_Fe1] = rsquare(Fe_m1A,Fe_m1A_sim_avg);
+[r2_Fe2,rmse_Fe2] = rsquare(Fe_m2A,Fe_m2A_sim_avg);
+[r2_Fs,rmse_Fs] = rsquare(Fs,Fs_approx);
 
-rms_Fs = rms(Fs_approx - Fs);
-r2_Fs = (Fs_approx' - mean(Fs)) / (Fs' - mean(Fs))
-
-rms_Fe_m1A = rms(Fe_m1A_approx - Fe_m1A);
-r2_Fe_m1A = (Fe_m1A_approx' - mean(Fe_m1A)) / (Fe_m1A' - mean(Fe_m1A));
-
-rms_Fe_m2A = rms(Fe_m2A_approx - Fe_m2A);
-r2_Fe_m2A = (Fe_m2A_approx' - mean(Fe_m2A)) / (Fe_m2A' - mean(Fe_m2A));
-
-y_b = 1/length(Fe_m1A_sim_avg) * sum(Fe_m1A_sim_avg);
-r2_test = sum((Fe_m1A - y_b).^2)/sum((Fe_m1A_sim_avg-y_b).^2);
-
-% disp('rms Fs =')
-% disp(rms_Fs)
-% disp('R^2 Fs =')
-% disp(r2_Fs)
-% 
-% disp('rms Fe -1A =')
-% disp(rms_Fe_m1A)
-% disp('R^2 Fe -1A =')
-% disp(r2_Fe_m1A)
-% 
-% disp('rms Fe -2A =')
-% disp(rms_Fe_m2A)
-% disp('R^2 Fe -2A =')
-% disp(r2_Fe_m2A)
-
-% clear Fs_approx Fs_red nbr_value P Y z_pos_red Fs
-% clear plots numerator_1 numerator_2 iK z_pos P Y Ae1 Ae2 
-% clear Fe_m1A Fe_m1A_sim Fe_m1A_sim_avg Fe_m2A Fe_m2A_sim Fe_m2A_sim_avg 
-% clear z_m1A z_m2A
-%% Error essai
-clc
-[r2_Fe1 rmse_Fe1] = rsquare(Fe_m1A,Fe_m1A_sim_avg)
-[r2_Fe2 rmse_Fe2] = rsquare(Fe_m2A,Fe_m2A_sim_avg)
-[r2_Fs rmse_Fs] = rsquare(Fs,Fs_approx)
+%% Save
+disp("------------------------------Save-------------------------------------")
+save('Data/Identification_MC','Be', 'Ae', 'As');
+disp("----------------------End IDENTIFICATION_MC----------------------------")

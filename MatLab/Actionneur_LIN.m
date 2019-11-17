@@ -1,7 +1,20 @@
 
-Linearisation;
-CONSTANTES;
-equilibre;
+clc 
+clear all
+close all
+addpath('Data')
+
+%Fait par : PHIL
+%Date : 2019-11-11
+%Reste a faire: 
+% - 
+% - 
+% - 
+
+load('Linearisation');
+load('Identification_MC');
+load('Constantes');
+load('equilibre');
 %Ces variables seront remplacées par celle dans banc d'essai si elle sont disponibles
 % Position à l'équilibre de la sphère (pour tests statiques)
     sig = 1.0;         % Présence (1) ou non (0) de la sphère
@@ -23,6 +36,8 @@ equilibre;
 
 
 %Match and remplace
+disp("---------------------------Match and remplace ------------------------------")
+
 
 Ae1 = Ae(1);
 Ae2 = Ae(2);
@@ -42,9 +57,9 @@ DFa_DIa = eval(subs(DFa_DIa));
 DFb_DIb = eval(subs(DFb_DIb));
 DFc_DIc = eval(subs(DFc_DIc));
 
+disp("---------------------------Graph Actionneurs--------------------------------")
 
-
-[z,I] = meshgrid(0:0.0003:0.03,-3:0.1:3);
+[z,I] = meshgrid(0:0.0001:0.03,-3:0.1:3);
 ZI = DFa_Dz.*(z-Pzeq) + DFa_DIa.*(I-eval(IA_eq))-1.4715;
 
 SUM_as =(As(4).*z.^3 + As(3).*z.^2 + As(2).*z + As(1));
