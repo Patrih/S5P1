@@ -20,10 +20,12 @@ z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
 tfin = 50;
 
 %initialisation
-addpath ../../../Matlab
-run ('equilibre.m')
-
-%------- AJOUTER LES INITIALISATIONS DES MATRICES ABCD ICI ----------------
+addpath ../../../Matlab/Data
+load ('equilibre.mat')
+load ('Linearisation.mat')
+load ('Constantes.mat')
+load ('equilibre.mat')
+load ('Identification_MC.mat')
 
 
 %Calcul des compensateurs

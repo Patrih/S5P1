@@ -78,7 +78,7 @@ disp("--------------------Calcul des courants à l'équilibre---------------------
   Vb_eq = IB_eq*RB;
   Vc_eq = IC_eq*RC;
   
-  entrees_eq = [Va_eq Vb_eq Vc_eq];
+  entrees_eq = eval([Va_eq Vb_eq Vc_eq]);
   
 %% Variable d'états à l'équilibre
 disp("---------------------Variables d'états à l'équilibre------------------------")
@@ -96,7 +96,7 @@ disp("---------------------Variables d'états à l'équilibre----------------------
  %IB_eq
  %IC_eq
  
- VE_eq = [Axeq Ayeq Pzeq Ophi_eq Otheta_eq Vz_eq xSeq ySeq Vsx_eq Vsy_eq IA_eq IB_eq IC_eq];
+ VE_eq = eval([Axeq Ayeq Pzeq Ophi_eq Otheta_eq Vz_eq xSeq ySeq Vsx_eq Vsy_eq IA_eq IB_eq IC_eq]);
  
 %% Sorties à l'équilibre
 disp("--------------------------Sorties à l'équilibre-----------------------------")

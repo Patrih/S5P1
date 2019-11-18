@@ -21,8 +21,9 @@ z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
 tfin = 50;
 
 %initialisation
-addpath ../../../Matlab
-run ('CONSTANTES.m')
+addpath ../../../Matlab/Data
+load ('Constantes.mat')
+load ('equilibre.mat')
 %bancessai_ini  %faites tous vos calculs de modele ici
 
 %Calcul des compensateurs
