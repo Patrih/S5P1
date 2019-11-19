@@ -14,13 +14,13 @@ load('Constantes');
 load('Identification_MC');
 disp("-------------------------Variables du banc d'essai--------------------------")
 
-%Ces variables seront remplacées par celle dans banc d'essai si elle sont disponibles
+% %Ces variables seront remplacées par celle dans banc d'essai si elle sont disponibles
 % Position à l'équilibre de la sphère (pour tests statiques)
     sig = 1.0;         % Présence (1) ou non (0) de la sphère
 
-    xSeq = 0.000;      % Position x de la sphère à l'équilibre en metres
+    xSeq = 0.000 * sig;      % Position x de la sphère à l'équilibre en metres
 
-    ySeq = 0.000;      % Position y de la sphère à l'équilibre en metres
+    ySeq = 0.000 * sig;      % Position y de la sphère à l'équilibre en metres
 %Point d'opération choisi pour la plaque
 
     Axeq = 0;               %en degres
@@ -29,7 +29,7 @@ disp("-------------------------Variables du banc d'essai------------------------
 
     Pzeq = 0.015;            %en metres
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
@@ -53,12 +53,12 @@ As4 = As(4);
 disp("---------------------Calcul des forces à l'équilibre------------------------")
 syms FA FB FC 
 
-FB = FC+ySeq*mS*g/-YB;
-FA = FC + mS*g*(xSeq*YB-ySeq*XB)/(2*XB*YB);
+FB = FC+sig*(ySeq*mS*g/-YB);
+FA = FC + sig*(mS*g*(xSeq*YB-ySeq*XB)/(2*XB*YB));
 
 FC_eq = solve(0 == FA+FB+FC+mS*g+mP*g, FC);
-FB_eq = FC_eq+ySeq*mS*g/-YB;
-FA_eq = FC_eq + mS*g*(xSeq*YB-ySeq*XB)/(2*XB*YB);
+FB_eq = FC_eq+sig*(ySeq*mS*g/-YB);
+FA_eq = FC_eq + sig*(mS*g*(xSeq*YB-ySeq*XB)/(2*XB*YB));
 
 %% Calcul de IA_eq, IB_eq et IC_eq selon 
 disp("--------------------Calcul des courants à l'équilibre-----------------------")
@@ -78,7 +78,7 @@ disp("--------------------Calcul des courants à l'équilibre---------------------
   Vb_eq = IB_eq*RB;
   Vc_eq = IC_eq*RC;
   
-  entrees_eq = [Va_eq Vb_eq Vc_eq];
+  entrees_eq = eval([Va_eq Vb_eq Vc_eq]);
   
 %% Variable d'états à l'équilibre
 disp("---------------------Variables d'états à l'équilibre------------------------")
@@ -96,7 +96,7 @@ disp("---------------------Variables d'états à l'équilibre----------------------
  %IB_eq
  %IC_eq
  
- VE_eq = [Axeq Ayeq Pzeq Ophi_eq Otheta_eq Vz_eq xSeq ySeq Vsx_eq Vsy_eq IA_eq IB_eq IC_eq];
+ VE_eq = eval([Axeq Ayeq Pzeq Ophi_eq Otheta_eq Vz_eq xSeq ySeq Vsx_eq Vsy_eq IA_eq IB_eq IC_eq]);
  
 %% Sorties à l'équilibre
 disp("--------------------------Sorties à l'équilibre-----------------------------")
@@ -146,7 +146,7 @@ Iz_eq = eval(TABC(3,1)*IA_eq + TABC(3,2)*IB_eq + TABC(3,3)*IC_eq);
  disp("---------------Calcul des tensions découplées à l'équilibre-----------------")
   Vphi_eq = Iphi_eq*RA;
   Vtheta_eq = Itheta_eq*RB;
-  Vz_eq = Iz_eq*RC;
+  VZ_eq = Iz_eq*RC;
  
  %% Variable d'état découplé a l'équilibre
  disp("----------------Variables d'états découplées à l'équilibre------------------")
