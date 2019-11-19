@@ -14,7 +14,7 @@ load('Constantes');
 load('Identification_MC');
 disp("-------------------------Variables du banc d'essai--------------------------")
 
-%Ces variables seront remplacées par celle dans banc d'essai si elle sont disponibles
+% %Ces variables seront remplacées par celle dans banc d'essai si elle sont disponibles
 % Position à l'équilibre de la sphère (pour tests statiques)
     sig = 1.0;         % Présence (1) ou non (0) de la sphère
 
@@ -29,7 +29,7 @@ disp("-------------------------Variables du banc d'essai------------------------
 
     Pzeq = 0.015;            %en metres
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
