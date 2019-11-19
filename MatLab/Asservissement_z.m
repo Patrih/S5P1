@@ -2,6 +2,7 @@ clc;
 clear all;
 close all;
 addpath('Data');
+addpath('Functions');
 
 % Fait par Louis Etienne
 % Date: 2019-11-18
@@ -17,25 +18,23 @@ wgd = 185;
 errech1d = -0.0004;
 errech2d = 0;
 
-[num, den] = tfdata(TF_z, 'v');
-
 %% Avance de phase
-Kd = 1 / abs(evalfr(TF_z, 1i*wgd));
-[PM, GM, wp, wg] = margin(Kd*TF_z);
+[avPh1, ~] = AvancePhaseBode1(TF_z, PMd, wgd, 5);
 
-marge = 80;
-dPhi = PMd + marge - PM;
+% Deuxième avance de phase
+[avPh2, ~] = AvancePhaseBode1(avPh1*TF_z, PMd, wgd, 10);
+margin(avPh2*avPh1*TF_z);
 
-alpha = (1-sind(dPhi))/(1+sind(dPhi));
-T = 1 / (wgd * sqrt(alpha));
 
-% Calcul du z et p
-z = -1/T;
-p = -1/(alpha*T);
+%% Erreur en régime permanent
+disp('--- ERREUR EN RÉGIME PERMANENT ---');
+erp = ErrRP(avPh2*avPh1*TF_z);
 
-Ka = Kd/sqrt(alpha);
 
-% Fonction de transfert du compensateur
-avPh = 0.1 * Ka * tf([1 -z], [1 -p]);
+%% Retard de phase
+rePh = RetardPhaseBode1(avPh2*avPh1*TF_z, errech1d, wgd, 10);
+erp = ErrRP(rePh*avPh2*avPh1*TF_z);
 
-margin(avPh*TF_z);
+%% Informations sur la stabilité
+FTBO_finale = rePh*avPh2*avPh1*TF_z;
+allmargin(FTBO_finale)
