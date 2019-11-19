@@ -4,5 +4,9 @@ function erp = errRP(FTBO)
 % return: erp - l'erreur en régime permanent
 
 erp = 1/(FTBO.Numerator{:}(end)/FTBO.Denominator{:}(end-GetClass(FTBO)));
+
+if (GetClass(FTBO) == 0)
+   erp = 1/((FTBO.Numerator{:}(end)/FTBO.Denominator{:}(end-GetClass(FTBO)))+1);
+end
 end
 

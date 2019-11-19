@@ -36,6 +36,14 @@ elseif (cas == 2)
 end
 
 % Erreur en régime permanent
+
+feed = feedback(FTBO_finale,1);
+x = linspace (0,.25,10000)';
+y = lsim(feed,ones(size(x)),x);
+plot(x,y);
+hold on
+plot(x,ones(size(x)));
+
 disp('--- ERREUR EN RÉGIME PERMANENT ---');
 erp = ErrRP(FTBO_finale)
 
