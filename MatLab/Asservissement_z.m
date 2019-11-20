@@ -47,6 +47,7 @@ plot(x,ones(size(x)));
 disp('--- ERREUR EN RÉGIME PERMANENT ---');
 erp = ErrRP(FTBO_finale)
 
-% Informations sur la stabilité
+%% Informations sur la stabilité
 
-allmargin(FTBO_finale)
+% allmargin(FTBO_finale)
+testdiscret(FTBO_finale)
