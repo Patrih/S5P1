@@ -1,6 +1,7 @@
 % Projet de session 
 %% Fonction phi
 clc ; clear all ; close all ;
+%
 phi_num = [9590];
 phi_denum = [1 31.3 -1780 -5.57e4];
 FCT_phi = tf(phi_num,phi_denum);
@@ -17,8 +18,21 @@ Err_echelon = 0;
 
 % Traduction en terme d'ingénierie
 phi = atan(-pi/log(MP/100));
-zeta = cos(phi);
-
+zeta1 = cos(phi);
+temps = linspace(0,1,100000)';
+echelon = ones(size(temps));
+index = 0;
+ts=1;
+mpaa = 1;
+wwwjjjw = 0;
+for zeta = zeta1:0.01:1.1
+    for modulation_Gain_Kacc = 1.5:0.1:2
+        for modification_Dphi_pole = 0:1:15
+            for nombre_AvPh = 2:1:3
+% zeta = 0.9501;
+% modulation_Gain_Kacc = 2.5;
+% modification_Dphi_pole = 10;
+% nombre_AvPh = 2;
 % Pour trouver lequel des Wn est le plus grand 
 wn1 = 4/(zeta*Ts) ; % wn avec Ts
 wn2 = (1 + 1.1*zeta + 1.4*(zeta^2))/Tm_10_90; % wn avec tm_10_90
@@ -36,31 +50,23 @@ pole_desire2 = -(zeta*wn) - (wn*sqrt(1-(zeta^2)))*1i;
 
 Phase_ajouter = rad2deg((angle(polyval(phi_num,pole_desire1))-angle(polyval(phi_denum,pole_desire1))));
 delta_phi_par_AvPh = -180 - Phase_ajouter+360;
-temps = linspace(0,1,10000)';
-echelon = ones(size(temps));
-index = 0;
-ts=1;
-mpaa = 1;
 
-% for d = 0:1:28
-%     for c = 1:0.1:1.5
-%         for a = 1:0.1:1.5
-%             for e = 250:1:250
-%                 f=-d;
-% % b = 5 limite rad/s = 950  
-% nombre_AvPh = 5;
-% modification_Dphi_pole = 72;
-% modification_Dphi_zero = -modification_Dphi_pole;
-% modulation_Gain_Kacc = 0.6;
-% modification_Gain_Kp = 1.3;
-% modification_Regle_Pouce = 250;
+
+% modification_Dphi_pole = 0;
+% modification_Dphi_zero=-modification_Dphi_pole;
+% for nombre_AvPh = 3:-1:2
+%     for modulation_Gain_Kacc = 0.1:0.1:1.5
+%         for modification_Gain_Kp = 0.1:0.1:1.5
+%             for modification_Regle_Pouce = 1:1:10
+                
+
 % % b = 2 lim rad/5 = 5000
-nombre_AvPh = 2;
-modification_Dphi_pole = 25;
+% nombre_AvPh = 2;
+% modification_Dphi_pole = 10;
 modification_Dphi_zero = -modification_Dphi_pole;
-modulation_Gain_Kacc = 1.5;
-modification_Gain_Kp = 1.5;
-modification_Regle_Pouce = 250;
+% modulation_Gain_Kacc = 1.5;
+modification_Gain_Kp = 1;
+modification_Regle_Pouce = 4;
 
 delta_phi_par_AvPh = (delta_phi_par_AvPh/nombre_AvPh);
 alpha = rad2deg(angle(pole_desire1));
@@ -111,36 +117,40 @@ FTBF_Finale = feedback(fonction_Finale,1);
 
 test = lsim(FTBF_Finale,echelon,temps);
 
-% wwwjjjw = wwwjjjw+1;
-% mp = max(test(6:end))-1;
-% position = find(test < 0.98 | test > 1.02,1, 'last');
-% if t(position)<Ts & mp<1
-%     
-% if mp<0.05
-% disp('------------------------------------------------------------------------------')    
-% disp(['mp = ', num2str(mp),' Pour module Ka = ',num2str(c),' et module Kr =',num2str(a)])
-% disp(['pour un ordre ', num2str(b), ' une modulation d''angle ',num2str(d),' et relge du pouce ' num2str(e)]) 
-% disp('------------------------------------------------------------------------------')
-% valeur = [mp,c,a,b,d,e];
-% else
-%     disp(['test no ', num2str(wwwjjjw),' Avec mp = ',num2str(mp),' et ts = ',num2str(t(position))])
-%     if mp<mpaa
-%         mpaa=mp
-%         valeurmin = [mp,c,a,b,d,e,f];
-%     end
-%     if t(position)<ts && mp<0.3
-%             mpaav = mp;
-%             ts = t(position);
-%             valeurmints = [mp,ts,c,a,b,d,e,f];
-%     end
-% end
-% end
-%             end
-%         end
-%     end
-% end
+wwwjjjw = wwwjjjw+1;
+mp = max(test(6:end))-1;
+position = find(test < 0.98 | test > 1.02,1, 'last');
+if temps(position)<Ts & mp<1 & p_AvPh>-1000
+    
+
+    disp(['test no ', num2str(wwwjjjw),' Avec mp = ',num2str(mp),' et ts = ',num2str(temps(position))])
+    if mp<mpaa
+        mpaa=mp
+        if mp<0.05
+            disp('------------------------------------------------------------------------------')    
+            disp(['mp = ', num2str(mp),' Pour module Ka = ',num2str(modulation_Gain_Kacc),' et module Kr =',num2str(modification_Gain_Kp)])
+            disp(['pour un ordre ', num2str(nombre_AvPh), ' une modulation d''angle ',num2str(modification_Dphi_pole),' et relge du pouce ' num2str(modification_Regle_Pouce)]) 
+            disp('------------------------------------------------------------------------------')
+            valeur = [mp,temps(position),zeta,modulation_Gain_Kacc,modification_Gain_Kp,nombre_AvPh,modification_Dphi_pole,modification_Regle_Pouce,modification_Dphi_zero];
+        else        
+            valeurmin = [mp,temps(position),zeta,modulation_Gain_Kacc,modification_Gain_Kp,nombre_AvPh,modification_Dphi_pole,modification_Regle_Pouce,modification_Dphi_zero];
+    end
+    if temps(position)<ts && mp<0.6
+            mpaav = mp;
+            ts = temps(position);
+            valeurmints = [mp,ts,zeta,modulation_Gain_Kacc,modification_Gain_Kp,nombre_AvPh,modification_Dphi_pole,modification_Regle_Pouce,modification_Dphi_zero];
+    end
+end
+elseif  mod(wwwjjjw,50)==0
+    disp(['essai no ', num2str(wwwjjjw)])
+end
+            end
+        end
+    end
+ end
 
 %%
+figure()
 plot(temps,test)
 hold on
 plot(temps,1.05*echelon,':');
@@ -159,4 +169,4 @@ margin(fonction_Finale)
 figure()
 nyquist(fonction_Finale)
 %%
-testdiscret(FCT_phi)
+testdiscret(G_PI*Fct_AvPh^nombre_AvPh*Kacc)
