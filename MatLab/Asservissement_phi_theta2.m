@@ -25,9 +25,9 @@ nombre_AvPh = 3;
 modification_Dphi_zero = -46;
 modification_Regle_Pouce = 200;
 modification_Dphi_pole = -modification_Dphi_zero;
-gain_Kp = 0.43;
-gain_Ka = 1.1;
-zeta = zeta1+0.12*zeta1;
+gain_Kp = 1.76;
+gain_Ka = 0.54;
+zeta = zeta1+0.11*zeta1;
 
 wn1 = 4/(zeta*Ts) ; % wn avec Ts
 wn2 = (1 + 1.1*zeta + 1.4*(zeta.^2))/Tm_10_90; % wn avec tm_10_90
@@ -126,16 +126,16 @@ if p_AvPh<-1000
     disp('a fuck!!!!')
 end
 disp('------------------------------------------------------------------------------')
-% figure()
-% plot(real(pole_desire1),imag(pole_desire1),'p')
-% hold on
-% plot(real(pole_desire2),imag(pole_desire2),'p')
-% rlocus(fonction_Finale)
+figure()
+plot(real(pole_desire1),imag(pole_desire1),'p')
+hold on
+plot(real(pole_desire2),imag(pole_desire2),'p')
+rlocus(fonction_Finale)
 
-% figure()
-% margin(fonction_Finale)
-% figure()
-% nyquist(fonction_Finale)
+figure()
+margin(fonction_Finale)
+figure()
+nyquist(fonction_Finale)
 
 figure()
 plot(temps,test)
@@ -143,6 +143,6 @@ hold on
 plot(temps,1.05*echelon,':');
 plot(temps,1.02*echelon,':');
 plot(temps,0.98*echelon,':');
-axis([0 0.1 0.7 2])
+% axis([0 0.1 0.7 2])
 %%
-% testdiscret(Com_Finale)
+testdiscret(Com_Finale)
