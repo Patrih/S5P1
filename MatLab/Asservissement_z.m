@@ -47,6 +47,24 @@ plot(x,ones(size(x)));
 disp('--- ERREUR EN RÉGIME PERMANENT ---');
 erp = ErrRP(FTBO_finale)
 
-% Informations sur la stabilité
+%% Ré-ajustement des poles
+compensateurs = PI*avPh2*avPh1;
 
-allmargin(FTBO_finale)
+[zeroes, poles, gain] = tf2zp(compensateurs.Numerator{:}, compensateurs.Denominator{:});
+poles(2) = -800;
+[num_comp, den_comp] = zp2tf(zeroes, poles, gain);
+
+compensateurs_new = tf(num_comp, den_comp);
+
+[z, p, gain_new] = tf2zp(compensateurs_new.Numerator{:}, compensateurs_new.Denominator{:});
+
+ratio = gain_new/gain;
+compensateurs_new = compensateurs_new * ratio;
+
+%% 
+figure(55)
+margin(compensateurs_new*TF_z)
+%% Informations sur la stabilité
+
+% allmargin(FTBO_finale)
+% testdiscret(compensateurs_new)
