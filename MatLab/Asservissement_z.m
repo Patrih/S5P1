@@ -37,7 +37,7 @@ errech2d = 0;
 %Cas
 CasRe = 1;
 CasPI = 2;
-cas = CasRe;
+cas = CasPI;
 
 %% Avance de phase
 disp("-----------------------Avance de phase------------------------------")
