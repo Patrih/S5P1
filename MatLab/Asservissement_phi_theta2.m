@@ -21,13 +21,13 @@ echelon = ones(size(temps));
 phi = atan(-pi/log(MP/100));
 zeta1 = cos(phi);
 
-nombre_AvPh = 3;
-modification_Dphi_zero = -46;
-modification_Regle_Pouce = 200;
-modification_Dphi_pole = -modification_Dphi_zero;
-gain_Kp = 1.76;
-gain_Ka = 0.54;
-zeta = zeta1+0.11*zeta1;
+nombre_AvPh = 2;
+modification_Dphi_zero = -10;
+Regle_Pouce = 10;
+modification_Dphi_pole = 8;
+gain_Kp = 1.01;
+gain_Ka = 1.1;
+zeta = zeta1+0.13*zeta1;
 
 wn1 = 4/(zeta*Ts) ; % wn avec Ts
 wn2 = (1 + 1.1*zeta + 1.4*(zeta.^2))/Tm_10_90; % wn avec tm_10_90
@@ -72,7 +72,7 @@ fct_AvPh = Fct_AvPh^nombre_AvPh *Kacc;
 
 % PI
 
-z_PI = real(pole_desire1)/modification_Regle_Pouce;
+z_PI = real(pole_desire1)/Regle_Pouce;
 p_PI = 0;
 
 num_PI = [1 -z_PI];
@@ -118,12 +118,12 @@ position = find(test < 0.98 | test > 1.02,1, 'last');
 %%
 disp('------------------------------------------------------------------------------')    
 disp(['mp = ', num2str(mp*100), '% ts = ', num2str(temps(position)),' Gain Kp = ', num2str(gain_Kp), ' et gain Kp = ', num2str(gain_Ka)])
-disp(['pour un ordre ', num2str(nombre_AvPh), ', une modulation d''angle ',num2str(modification_Dphi_pole), ' et règle du pouce = ', num2str(modification_Regle_Pouce)]) 
+disp(['pour un ordre ', num2str(nombre_AvPh), ', une modulation d''angle ',num2str(modification_Dphi_pole), ' et règle du pouce = ', num2str(Regle_Pouce)]) 
 if temps(position)<Ts & mp<0.05
     disp('Oh oui, oh fuck oui')
 end
 if p_AvPh<-1000
-    disp('a fuck!!!!')
+    disp(['a fuck!!!! les pôles sont à : ', num2str(p_AvPh)])
 end
 disp('------------------------------------------------------------------------------')
 figure()
@@ -132,10 +132,10 @@ hold on
 plot(real(pole_desire2),imag(pole_desire2),'p')
 rlocus(fonction_Finale)
 
-figure()
-margin(fonction_Finale)
-figure()
-nyquist(fonction_Finale)
+% figure()
+% margin(fonction_Finale)
+% figure()
+% nyquist(fonction_Finale)
 
 figure()
 plot(temps,test)
@@ -143,6 +143,6 @@ hold on
 plot(temps,1.05*echelon,':');
 plot(temps,1.02*echelon,':');
 plot(temps,0.98*echelon,':');
-% axis([0 0.1 0.7 2])
+axis([0 0.1 0.7 2])
 %%
-testdiscret(Com_Finale)
+% testdiscret(Com_Finale)
