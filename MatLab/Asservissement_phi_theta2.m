@@ -152,8 +152,19 @@ Com_den = [1 -0.96150903169207657673 -0.037997116760829188764 -0.000491739455511
  
 [zeroes, poles, gain] = tf2zp(Com_num,Com_den);
 poles(1) = 1-1e-6;
-[num_comp, den_comp] = zp2tf(zeroes, poles, gain)
+[num_comp, den_comp] = zp2tf(zeroes, poles, gain);
 
+clear phi
+
+%Asservissement en Phi
+phi.discret.num =   Com_num;
+phi.discret.den =   Com_den;
+
+phi.continus.num = Com_Finale.Numerator{:};
+phi.continus.den = Com_Finale.Denominator{:};
+
+
+save('Data/asservissement','phi','-append')
 
 %% Fonction phi
 clear all ; close all ;

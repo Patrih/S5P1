@@ -37,7 +37,7 @@ errech2d = 0;
 %Cas
 CasRe = 1;
 CasPI = 2;
-cas = CasRe;
+cas = CasPI;
 
 %% Avance de phase
 disp("-----------------------Avance de phase------------------------------")
@@ -69,6 +69,14 @@ FTBO_finale = compensateur_final* TF_z;
 %% Compensateur discret
 disp("----------------------Compensateur discret------------------------------")
 
+%Asservissement en Z
+z_pi.discret.num =    1.0e+06 *[1.179170317199179  -3.242723345839170   2.968867523214514  -0.904880742326366];
+z_pi.discret.den =    [1.000000000000000  -1.322007697316007   0.309747543689684   0.012260819356794];
+
+z_re.discret.num = [1179050.4692867584527 -3242393.7635745150037 2968565.7749685486779 -904788.77251812396571];
+z_re.discret.den = [1 -1.321805422334144442 0.30968240938627561443 0.012258339297300559212];
+
+
 if cas == CasPI
     % testdiscret(compensateur_final)
 
@@ -83,10 +91,22 @@ if cas == CasPI
     [num_comp, den_comp] = zp2tf(zeroes, poles, gain);
 
     compensateursDiscret = tf(num_comp, den_comp)
+    
+    z_pi.continus.num = compensateur_final.Numerator{:};
+    z_pi.continus.den = compensateur_final.Denominator{:};
+    
+    save('Data/asservissement','z_pi','-append')
+    
 
 elseif cas == CasRe
     testdiscret(compensateur_final)
+    z_re.continus.num = compensateur_final.Numerator{:};
+    z_re.continus.den = compensateur_final.Denominator{:};
+    save('Data/asservissement','z_re','-append')
+    
 end
+
+
 
 
 
