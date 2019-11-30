@@ -92,3 +92,5 @@ FTBF_y = tf(NUM_y,DEN_y);
 % hold on
 % plot(t,a)
 % plot(t,b)
+addpath Data
+save Data/Ass_x_y Kv_y Kv_x Kp_x Kp_y
