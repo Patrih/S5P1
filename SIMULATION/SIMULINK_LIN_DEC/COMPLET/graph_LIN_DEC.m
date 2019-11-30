@@ -12,7 +12,7 @@ units= ["Erreur" ,"angle(rad)" ,"angle(rad)" , "position(m)" , "position(m)" , "
 %             |            00            |             10           
 %figure        1  2  3  4  5  6  7  8  9  0  1  2  3  4  5  6  7
 %name          Er Ax Ay Pz Px Py Vx Vy Za Zb Zc Zd Ze Zf VA VB VC
-figure_25  = [ 0  0  0  0  1  1  0  0  0  0  0  0  0  0  0  0  0 ];
+figure_25  = [ 0  0  0  0  1  1  0  0  1  1  1  0  0  0  0  0  0 ];
 
 for i = 1 : 17
     if figure_25(i) == 1

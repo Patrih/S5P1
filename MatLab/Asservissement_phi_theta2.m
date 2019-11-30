@@ -157,14 +157,14 @@ poles(1) = 1-1e-6;
 clear phi
 
 %Asservissement en Phi
-phi.discret.num =   Com_num;
-phi.discret.den =   Com_den;
+phi_1.discret.num =   Com_num;
+phi_1.discret.den =   Com_den;
 
-phi.continus.num = Com_Finale.Numerator{:};
-phi.continus.den = Com_Finale.Denominator{:};
+phi_1.continus.num = Com_Finale.Numerator{:};
+phi_1.continus.den = Com_Finale.Denominator{:};
 
 
-save('Data/asservissement','phi','-append')
+save('Data/asservissement','phi_1','-append')
 
 %% Fonction phi
 clear all ; close all ;
@@ -326,6 +326,18 @@ compensateursDiscret = tf(numDiscret,denDiscret);
     [num_comp, den_comp] = zp2tf(zeroes, poles, gain);
 
 compensateursDiscret = tf(num_comp, den_comp)
+
+clear phi
+
+%Asservissement en Phi
+phi_2.discret.num =   num_comp;
+phi_2.discret.den =   den_comp;
+
+phi_2.continus.num = Com_Finale.Numerator{:};
+phi_2.continus.den = Com_Finale.Denominator{:};
+
+
+save('Data/asservissement','phi_2','-append')
 
 
 % testdiscret(Com_Finale)
