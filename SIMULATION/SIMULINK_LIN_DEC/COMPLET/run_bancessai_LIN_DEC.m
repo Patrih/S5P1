@@ -27,6 +27,7 @@ tfin = 50;
 %initialisation
 addpath ../../../Matlab/Data
 load('equilibre.mat');
+load Ass_x_y
 
 
 
