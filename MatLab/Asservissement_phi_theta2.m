@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 %% Fonction phi
 clear all ; close all ;
 %
@@ -146,8 +145,16 @@ plot(temps,1.02*echelon,':');
 plot(temps,0.98*echelon,':');
 % axis([0 0.1 0.7 2])
 %%
-testdiscret(Com_Finale)
-=======
+% testdiscret(Com_Finale)
+
+Com_num = [11411.416349652961799 -35858.849749357657856 41910.951861202978762 -21621.512802560471755 4158.4076380355918445];
+Com_den = [1 -0.96150903169207657673 -0.037997116760829188764 -0.00049173945551108082935 -2.1120915830508403274e-06];
+ 
+[zeroes, poles, gain] = tf2zp(Com_num,Com_den);
+poles(1) = 1-1e-6;
+[num_comp, den_comp] = zp2tf(zeroes, poles, gain)
+
+
 %% Fonction phi
 clear all ; close all ;
 %
@@ -297,7 +304,6 @@ plot(temps,1.02*echelon,':');
 plot(temps,0.98*echelon,':');
 axis([0 0.1 0.7 2])
 %%
-<<<<<<< HEAD
 testdiscret(Com_Finale)
 %%
 numDiscret = [0.96826350433224783743 0.87241036731407162197 0.87241019943908271195];
@@ -310,7 +316,6 @@ compensateursDiscret = tf(numDiscret,denDiscret);
 
 compensateursDiscret = tf(num_comp, den_comp)
 
-=======
+
 % testdiscret(Com_Finale)
->>>>>>> 2491c1aa9a34795ac5dadf10bc5f678ec2d6e94e
->>>>>>> 9cbfb8652b834512335d92666aa420ceef63edaa
+
