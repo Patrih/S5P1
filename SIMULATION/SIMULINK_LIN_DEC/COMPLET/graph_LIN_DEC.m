@@ -1,6 +1,6 @@
 close all
 clc
-name = [ "Ax" , "Ay" , "Pz" , "Wx" , "Wy" , "Vz" , "Px" , "Py" , "Vx" , "Vy" , "IA" , "IB" , "IC" , "Za" , "Zb" , "Zc" , "Zd" , "Ze" , "Zf" , "FA" , "FB" , "FC" , "VA" , "VB" , "VC"];
+name = [ "Er","Ax","Ay","Pz","Px","Py","Vx","Vy","Za","Zb","Zc","Zd","Ze","Zf","Va","Vb","Vc"];
 
 units= ["Erreur" ,"angle(rad)" ,"angle(rad)" , "position(m)" , "position(m)" , "position(m)" ,"vitesse (m/s)" , "vitesse (m/s)" ,"position(m)" ,"position(m)","position(m)","position(m)","position(m)","position(m)","Tension(V)","Tension(V)","Tension(V)"];
 
@@ -13,6 +13,11 @@ units= ["Erreur" ,"angle(rad)" ,"angle(rad)" , "position(m)" , "position(m)" , "
 %figure        1  2  3  4  5  6  7  8  9  0  1  2  3  4  5  6  7
 %name          Er Ax Ay Pz Px Py Vx Vy Za Zb Zc Zd Ze Zf VA VB VC
 figure_25  = [ 0  0  0  0  1  1  0  0  1  1  1  0  0  0  0  0  0 ];
+
+% ynonlineaire(:,end+1) = tsim;
+% JB_nonlineaire = ynonlineaire;
+% 
+% save('Tamp','JB_nonlineaire','-append');
 
 for i = 1 : 17
     if figure_25(i) == 1
