@@ -1,7 +1,7 @@
 function [C, L] = InterpolationLagrange(X, Y)
 % This function do a Lagrange interpolation.
-% param: pointx - Vecotr of x of the points we want to interpolate
-% param: pointy - Vecotr of y of the points we want to interpolate
+% param: pointx - Vector of x of the points we want to interpolate
+% param: pointy - Vector of y of the points we want to interpolate
 % return: C     - Matrix of polynomial coefficients
 % return: L     - Matrix of Lagrange coefficients
 
