@@ -112,8 +112,8 @@ axis([0 0.1 0.7 2])
 %%
 testdiscret(Com_Finale)
 %%
-numDiscret = [0.96826350433224783743 0.87241036731407162197 0.87241019943908271195];
-denDiscret = [1 -0.017813316233156323287 -0.017813316233156323287];
+numDiscret = [6995.6646440236027047 -18979.826312355751725 17143.196464267886768 -5155.4205367089734864];
+denDiscret = [1 -0.96437336753368740894 -0.035309318231090243423 -0.0003173142352224310697];
 compensateursDiscret = tf(numDiscret,denDiscret);
 
 [zeroes, poles, gain] = tf2zp(compensateursDiscret.Numerator{:}, compensateursDiscret.Denominator{:});
@@ -131,4 +131,4 @@ phi_2.discret.den =   den_comp;
 phi_2.continus.num = Com_Finale.Numerator{:};
 phi_2.continus.den = Com_Finale.Denominator{:};
 
-save('Data/asservissement','phi_2','-append')
+save('Data/asservissement','phi_2')
