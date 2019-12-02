@@ -22,8 +22,10 @@ tfin = 50;
 
 %initialisation
 addpath ../../../Matlab/Data
-load ('equilibre.mat')
-
+addpath ../../ERROR_DETECT
+load('equilibre.mat');
+load Ass_x_y.mat
+load asservissement.mat
 
 
 %Calcul des compensateurs
