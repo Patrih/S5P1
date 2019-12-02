@@ -1,4 +1,4 @@
-function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories(points_in , v_des , Ts)
+function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories(points_in , v_des , Ts , z)
     % This function do a Lagrange interpolation.
     % param: points_in - (N,2) vector containing the desired points
     % param: v_des     - The desired speed
@@ -26,10 +26,12 @@ function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories(points_
 
     f_sym = poly2sym(Pi , x_sym);
     df_sym = diff(f_sym);
-
+    ddf_sym = diff(df_sym);
+    
     % Calcul de la longueur
 
     g_sym = sqrt(1 + df_sym^2);
+    dg_sym = (ddf_sym*df_sym)/g_sym;
 
     m = 101;
     d_ech = (x(end) - x(1))/(m-1);
@@ -37,14 +39,18 @@ function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories(points_
 
     g_eval = subs(g_sym , ech_g);
 
-    L = Trapeze(g_eval, ech_g(2) - ech_g(1), 0)';
-    L = L(end);
+    [L,err_trap] = Trapeze(g_eval, ech_g(2) - ech_g(1), 0);
+    L1 = L';
+    L = L1(end)';
     
-    % TODO ERROR
-    E = 0;
+    fp_b = eval(subs(dg_sym , x(end)));
+    fp_a = eval(subs(dg_sym , x(1)));
+    E_eval = (d_ech^2/12)*(fp_b - fp_a);
+    E_trap = eval(err_trap);
     
+    E = E_eval;
     
-    N_arc = round(L/(v_des*Ts));
+    N_arc = abs(round(L/(v_des*Ts)));
     Vr = L/(N_arc*Ts);
     
     tt = N_arc*Ts;
@@ -57,6 +63,7 @@ function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories(points_
     Ltr = zeros(N_arc+1,1);
     
     x_sep = zeros(N_arc+1,1);
+    x_sep(1) = x(1);
     ite_count   = zeros(N_arc+1,1);
 
     for i = 2:N_arc+1
@@ -111,13 +118,17 @@ function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories(points_
     
     y_sep = eval(subs(f_sym , x_sep));
     
-    x_eval = x_sep(1) : 0.0001 : x_sep(end)+0.0001;
+    sign_crois = sign(x(2)-x(1));
+    
+    x_eval = x(1) : sign_crois*0.0001 : x(end)+0.0001;
     y_eval = eval(subs(f_sym , x_eval));
     
     Traj = [x_sep , y_sep];
-
-    %TODO WHEN WE KNOW THE FORMAT
-    Traj_BE = 0;
+    
+    z_out = z.*ones(size(x_sep));
+    t_out = (0 : Ts : tt)';
+    
+    Traj_BE = [t_out, x_sep , y_sep , z_out];
     
     th = 0:pi/50:2*pi;
     xunit = R * cos(th);

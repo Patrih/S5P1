@@ -12,7 +12,7 @@ function [F, err] = Trapeze(f, h, initial)
     for i = 2:length(f)
         F(i) = (h/2) * (f(1) + f(i) + 2*sum(f(2:i-1))) + initial;
     end
-%     
-%     [fpa, fpb] = Fp(f, h);
-%     err = (h^2/12) * (fpb-fpa);
+    
+    [fpa, fpb] = Fp(f, h);
+    err = (h^2/12) * (fpb-fpa);
 end
