@@ -1,6 +1,6 @@
-clear all;
-close all;
-clc;
+% clear all;
+% close all;
+% clc;
 
 %Fait par : Louis-D
 %Date : 2019-12-02
@@ -61,5 +61,5 @@ save('Data/TRAJ_OUT' , 'Traj')
 save('Data/PARAMS_TRAJ' , 'Pi','Ltr','E','Vr','tt')
 
 
-
+plot(t,Traj)
 

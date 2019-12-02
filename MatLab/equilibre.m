@@ -1,14 +1,11 @@
-clc 
-clear all
-close all
+clc;
+clear all;
+close all;
 addpath('Data')
 
 %Fait par : Phil, Guillaume
 %Date : 2019-11-11
-%Reste a faire: 
-% - 
-% - 
-% - 
+
 load('Linearisation');
 load('Constantes');
 load('Identification_MC');
@@ -31,9 +28,6 @@ disp("-------------------------Variables du banc d'essai------------------------
 
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
-
 %% Match and remplace
 disp("---------------------------Match and remplace ------------------------------")
 Ae1 = Ae(1);
@@ -45,9 +39,6 @@ As1 = As(1);
 As2 = As(2);
 As3 = As(3);
 As4 = As(4);
-
-
-
 
 %Calcul des forces à l'équilibre
 disp("---------------------Calcul des forces à l'équilibre------------------------")
@@ -110,7 +101,6 @@ disp("--------------------------Sorties à l'équilibre---------------------------
 
 sorties_eq = [dD_eq dE_eq dF_eq xSeq ySeq Vsx_eq Vsy_eq];
   
-  
   %% Matrices ABCD évalues à l'équilibre
   disp("-----------Matrices A,B,C,D et PP,PC,PS,SP,CC,CV à l'équilibre--------------")
 PP = eval(subs(PP));
@@ -132,11 +122,9 @@ B = [[zeros([10,3])];
 C = [[TDEF' zeros([3,10])];
      [zeros([4,6]) eye(4) zeros([4,3])]];
  
-  
 D = zeros([7,3]);
 %% calcul de l'équilibre pour le découplé
 disp("---------------Calcul des courants découplés à l'équilibre------------------")
-% [Iphi_eq Itheta_eq Iz_eq]' == TABC_inv * [IA_eq IB_eq IC_eq]';
 
 Iphi_eq = eval(TABC(1,1)*IA_eq + TABC(1,2)*IB_eq + TABC(1,3)*IC_eq);
 Itheta_eq = eval(TABC(2,1)*IA_eq + TABC(2,2)*IB_eq + TABC(2,3)*IC_eq);
@@ -186,9 +174,6 @@ D_phi = [0];
 
 TF_phi = tf(num_phi,den_phi);
 
-% figure()
-% rlocus(TF_phi)
-% title('Pôle et zéro du sous système phi')
 %% système axe theta
   disp("-----------------------Système découplé : Axe Theta-------------------------")
 A_theta = [0 1 0 ;
@@ -204,9 +189,6 @@ D_theta = [0];
 [num_theta,den_theta] = ss2tf(A_theta,B_theta,C_theta,D_theta);
 
 TF_theta = tf(num_theta,den_theta);
-% figure()
-% rlocus(TF_theta)
-% title('Pôle et zéro du sous système theta')
 
 %% système z
   disp("-------------------------Système découplé : Axe Z---------------------------")
@@ -223,16 +205,14 @@ D_z = [0];
 [num_z,den_z] = ss2tf(A_z,B_z,C_z,D_z);
 
 TF_z= tf(num_z(1,:),den_z);
-% figure()
-% rlocus(TF_z)
-% title('Pôle et zéro du sous système z')
+
 %% système x
   disp("-------------------------Système découplé : Axe X---------------------------")
 
 A_x = [0 1;
        0 0;];
    
-B_x = [0 SP_dec(1,2)]'; % vraiment pas sur pour la matrice B 
+B_x = [0 SP_dec(1,2)]'; 
 
 C_x = [1 0;
        0 1;];
@@ -243,12 +223,6 @@ D_x = [0 0]';
 
 TF_x = tf(num_x(1,:),den_x);
 TF_vx = tf(num_x(2,1:3),den_x);
-% figure()
-% rlocus(TF_x)
-% title('Pôle et zéro du sous système position sphère x')
-% figure()
-% rlocus(TF_vx)
-% title('Pôle et zéro du sous système vitesse sphère x')
 
 
 %% système y
@@ -256,7 +230,7 @@ TF_vx = tf(num_x(2,1:3),den_x);
 A_y = [0 1;
        0 0;];
    
-B_y = [0 SP_dec(2,1)]'; % vraiment pas sur pour la matrice B 
+B_y = [0 SP_dec(2,1)]'; 
 
 C_y = [1 0;
        0 1;];
@@ -267,12 +241,6 @@ D_y = [0 0]';
 
 TF_y = tf(num_y(1,1:3),den_y);
 TF_vy = tf(num_y(2,1:3),den_y);
-% figure()
-% rlocus(TF_y)
-% title('Pôle et zéro du sous système position sphère y')
-% figure()
-% rlocus(TF_vy)
-% title('Pôle et zéro du sous système vitesse sphère y')
 
 disp("------------------------------------Save------------------------------------")
 save('Data/equilibre');

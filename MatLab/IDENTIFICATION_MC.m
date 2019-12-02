@@ -1,14 +1,10 @@
-clc 
-clear all
-close all
+clc ;
+clear all;
+close all;
 addpath('Data')
 
 %Fait par : LD/Louis
 %Date : 2019-11-11
-%Reste a faire: 
-% - Rien
-% - 
-% - 
 
 %% Force magnétique
 
@@ -49,7 +45,6 @@ Y = -1./(Fs_red);
 As = pinv(P)*Y;
 
 Fs_approx = -1./(As(4).*z_pos.^3 + As(3).*z_pos.^2 + As(2).*z_pos + As(1));
-
 
 if plots(2)
     figure()
