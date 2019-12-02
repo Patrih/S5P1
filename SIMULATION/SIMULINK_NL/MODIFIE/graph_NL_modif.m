@@ -24,19 +24,60 @@ for i = 1 : 25
     end
 end
 
-t_des_traj = [0 5 10 10 15 15 20 20 25 25  30  30 35 35 40 40 45 50];
-x_des_traj = [0 0 0  25 25 50 50 0  0  -50 -50 0  0  50 50 0  0  0]./1e3;
-y_des_traj = [0 0 0  0  0  0  0  -50 -50 0 0   50 50 0  0  0  0  0]./1e3;
+% t_des_traj = [0 5 10 10 15 15 20 20 25 25  30  30 35 35 40 40 45 50];
+% x_des_traj = [0 0 0  25 25 50 50 0  0  -50 -50 0  0  50 50 0  0  0]./1e3;
+% y_des_traj = [0 0 0  0  0  0  0  -50 -50 0 0   50 50 0  0  0  0  0]./1e3;
+% 
+% figure(7);
+% hold on
+% plot(t_des_traj , x_des_traj)
+% legend( 'Trajectoire simulée' , 'Trajectoire demandée','Location','southwest')
+% hold off
+% 
+% figure(8);
+% hold on
+% plot(t_des_traj , y_des_traj)
+% legend( {'Trajectoire simulée' , 'Trajectoire demandée'},'Location','northwest')
+% hold off
+
+x_plot(1) = x_des(1);
+y_plot(1) = y_des(1);
+z_plot(1) = z_des(1);
+t_plot(1) = t_des(1);
+
+for i = 2:length(t_des)
+    
+    x_plot(2*i-2) = x_des(i-1,2);
+    x_plot(2*i-1) = x_des(i,2);
+    
+    y_plot(2*i-2) = y_des(i-1,2);
+    y_plot(2*i-1) = y_des(i,2);
+    
+    z_plot(2*i-2) = z_des(i-1,2);
+    z_plot(2*i-1) = z_des(i,2);
+    
+    t_plot(2*i-2) = t_des(i);
+    t_plot(2*i-1) = t_des(i);
+end
+t_plot(2*length(t_des)) = tfin;
+x_plot(2*length(t_des)) = x_plot(2*length(t_des)-1);
+y_plot(2*length(t_des)) = y_plot(2*length(t_des)-1);
+z_plot(2*length(t_des)) = y_plot(2*length(t_des)-1);
 
 figure(7);
 hold on
-plot(t_des_traj , x_des_traj)
-legend( 'Trajectoire simulée' , 'Trajectoire demandée','Location','southwest')
+plot(t_plot, x_plot)
+legend( 'Trajectoire simulée' , 'Trajectoire demandée','Location','southeast')
 hold off
 
 figure(8);
 hold on
-plot(t_des_traj , y_des_traj)
-legend( {'Trajectoire simulée' , 'Trajectoire demandée'},'Location','northwest')
+plot(t_plot, y_plot)
+legend( {'Trajectoire simulée' , 'Trajectoire demandée'},'Location','northeast')
 hold off
+
+
+
+
+
 
