@@ -3,6 +3,8 @@ Hiérarchie:
 NOTE: seul les documents utiles sont mentionnés
 
 
+
+
 Matlab
 	Data
 		Emplacement des fichiers.mat de sortie de toutes les fonctions
@@ -104,5 +106,8 @@ Simulation
 				   -> Script de sortie de tous les graphiques de la simulation
 ARBORESCENCE_CODE.png
    -> Diagrame draw.io exporté en png qui présente la hiérarchie présente du code
-
+plate_control_profile.xml
+   -> Configuration des actionneurs pour le banc d'essais
+fonctionDisctetise.txt
+   -> Compensateurs discétisés sous forme texte pour présentation
 
