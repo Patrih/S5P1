@@ -6,13 +6,8 @@ addpath('Functions')
 
 %Fait par : Francois
 %Date : 2019-11-11
-%Reste a faire: 
-% - Nada
-% - 
-% - 
 
 %% Data
-
 load('Data/capteur.mat');
 
 % 1     Original Data
@@ -27,12 +22,9 @@ load('Data/capteur.mat');
 %Figure  1 2 3 4 5 6 7 8 9
 plots = [0 0 1 1 1 0 0 0];
 
-
-
 xn = distance(1:end-1);
 yn = voltage(1:end-1);
 x = (min(xn):1e-6:max(xn));
-
 
 %% Original data
 if plots(1)
@@ -133,5 +125,3 @@ if plots(5)
     disp(['R2 : ' num2str(R2,4)])
     disp(['RMS : ' num2str(RMS,4)])
 end
-
-

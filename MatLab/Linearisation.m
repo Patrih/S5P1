@@ -5,14 +5,9 @@ addpath('Data')
 
 %Fait par : PHIL
 %Date : 2019-11-11
-%Reste a faire: 
-% - 
-% - 
-% - 
 
 %% Linearisation
 disp("--------------------------------Syms-----------------------------------")
-
 
 syms Axeq Ayeq Pzeq
 syms Fk
@@ -35,6 +30,7 @@ disp("-------------------------------Dérivées--------------------------------")
 Fk = (Ik*abs(Ik) + Be*Ik)/(Ae1 + Ae2*ZK + Ae3*ZK^2 + Ae4*ZK^3)-1/(As1 + As2*ZK + As3*ZK^2 + As4*ZK^3);
 %remplacement de la variable z par z0-Xktheta+Ykphi tel que proposé par
 %l'équation à la page 23 des specs
+
 Fk = subs (Fk,ZK,Pzeq-XK*Ayeq+YK*Axeq);
 %Faire la dérivée partielle de la force FK par phi,theta,z et I
 DFk_Dphi = diff(Fk,Axeq);

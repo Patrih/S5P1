@@ -1,10 +1,9 @@
 function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = compute_trajectories(points_in , v_des , Ts)
-    % This function do a Lagrange interpolation.
     % param: points_in - (N,2) vector containing the desired points
     % param: v_des     - The desired speed
     % param: Ts        - The period between each point
     % return: Pi       - Matrix of polynomial coefficients
-    % return: Ltr      -(M,2) matrix containing the length points
+    % return: Ltr      - (M,2) matrix containing the length points
     % return: E        - Error
     % return: Vr       - Actual speed
     % return: Traj     - Matrix of the trajectory
@@ -82,7 +81,7 @@ function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = compute_trajectories(points
         Ltr (i,2) = Ltr (i-1)+L_stp;
         
     end
-    Ltr(:,1) = 0:1:length(Ltr);
+    Ltr(:,1) = 1:1:length(Ltr);
     
     y_sep = eval(subs(f_sym , x_sep));
     

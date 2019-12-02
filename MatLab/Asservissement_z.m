@@ -22,7 +22,6 @@ addpath('Functions');
 %Figure  1 2 3 4 5 6 7 8 9
 plots = [0 0 1 0 0 0 0 0 0];
 
-
 %% Définitions & Loading
 
 %Loading
@@ -97,7 +96,6 @@ if cas == CasPI
     
     save('Data/asservissement','z_pi','-append')
     
-
 elseif cas == CasRe
     testdiscret(compensateur_final)
     z_re.continus.num = compensateur_final.Numerator{:};
@@ -105,10 +103,6 @@ elseif cas == CasRe
     save('Data/asservissement','z_re','-append')
     
 end
-
-
-
-
 
 %% Informations
 disp("-------------------------Informations-------------------------------")

@@ -6,7 +6,7 @@ function [PI, Kp] = PIBode(wgd, marge)
 % param: marge - la marge choisie (phase itérative)
 % return: PI   - la fonction de transfert du compensateur PI avec son
 %                gain
-
+%z is for zero
 z = -wgd/marge;
 Kp = 1;
 

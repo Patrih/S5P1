@@ -22,7 +22,7 @@ else
     alpha = (1-sind(dPhi))/(1+sind(dPhi));
     T = 1 / (wgd * sqrt(alpha));
 
-    % Calcul du z et p
+    % Calcul du zéro et pôle du compensateur
     z = -1/T;
     p = -1/(alpha*T);
 

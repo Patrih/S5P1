@@ -1,6 +1,6 @@
-clear all;
-close all;
-clc;
+% clear all;
+% close all;
+% clc;
 
 addpath('Functions');
 
@@ -16,5 +16,5 @@ Ts = 0.5;
 
 
 
-
+plot(t,Traj)
 

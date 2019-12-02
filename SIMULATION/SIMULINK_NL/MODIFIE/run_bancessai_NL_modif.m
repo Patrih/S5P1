@@ -14,11 +14,21 @@ clc
 % Pzeq = .015;            %en metres
 
 %Exemple de trajectoire
-t_des     = [0:1:8]'*5;
-x_des     = [t_des, [0 0 0.5 1  0 -1 0 1 0]'*0.05];
-y_des     = [t_des, [0 0 0 0 -1  0 1 0 0]'*0.05];
-z_des     = [t_des, [1 1 1 1  1  1 1 1 1]'*.015];
-tfin = 50;
+% t_des     = [0:1:8]'*5;
+% x_des     = [t_des, [0 0 0.5 1  0 -1 0 1 0]'*0.05];
+% y_des     = [t_des, [0 0 0 0 -1  0 1 0 0]'*0.05];
+% z_des     = [t_des, [1 1 1 1  0.95  0.90 1 1 1]'*.015];
+% tfin = 50;
+
+run Trajectoires
+t_des = tt/length(Traj(:,1);
+x_des = 
+
+
+
+
+
+%%
 
 %initialisation
 addpath ../../../Matlab/Data

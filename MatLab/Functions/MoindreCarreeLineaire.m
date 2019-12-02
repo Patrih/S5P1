@@ -1,6 +1,6 @@
 function [b,m,E,R2,RMS] = MoindreCarreeLineaire(xn,yn)
 %MOINDRECARREELINEAIRE Summary of this function goes here
-%   Detailed explanation goes here
+%   En format linéaire 
 N = length(xn);
 
 MatriceA = inv([N sum(xn); sum(xn) sum(xn.^2)]);
