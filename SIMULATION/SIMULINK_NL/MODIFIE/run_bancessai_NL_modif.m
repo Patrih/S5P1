@@ -18,9 +18,9 @@ addpath ../../../Matlab/Functions
 x = [0 0.2 0.3 0.4 0.6 0.8].*62.5e-3;
 y = [0 0.8 0.6 0 -0.2 0].*62.5e-3;
 
-v_al=0.01;
-v_ret = 0.005;
-ts=1;
+v_al=0.05;
+v_ret = 0.05;
+ts=0.5;
 
 
 [Pi_al , Ltr_al , E_al , Vr_al , Traj_al , tt_al , Traj_BE_al] = ComputeTrajectories([x' , y'] , v_al , ts , 0.015);
@@ -62,3 +62,8 @@ sim('simulation_NL_modif')
 
 %affichage
 %trajectoires
+
+%% FP
+
+FP = ErreurFp(t_des , x_des , y_des , ynonlineaire , tsim);
+

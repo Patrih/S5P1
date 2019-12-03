@@ -16,6 +16,8 @@ Matlab
 		   -> Fonciton qui prends les paramètres voulus de la trajectoire selon l'annexe E
 		CreateArrayTB.m
 		   -> Fonction qui prend les trajectoires en allé et retour et les concatène 
+		ErreurFp.m	
+		   -> Fonction de calcul du facteur de performance
 		ErrRP.m
 		   -> calcule l'erreur en régime permanent d'une FT
 		Fp.m

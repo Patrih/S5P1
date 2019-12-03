@@ -70,6 +70,7 @@ plot(t_plot, x_plot)
 legend( 'Trajectoire simulée' , 'Trajectoire demandée','Location','southeast')
 hold off
 
+
 figure(8);
 hold on
 plot(t_plot, y_plot)
