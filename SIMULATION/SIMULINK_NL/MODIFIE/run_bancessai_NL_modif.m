@@ -15,21 +15,24 @@ addpath ../../../Matlab/Functions
 
 %Exemple de trajectoire
 
-%Points du prof 
-x=[0]*62.5e-3;
-y=[0]*62.5e-3;
-v=0.01;
-ts=2;
+x = [0 0.2 0.3 0.4 0.6 0.8].*62.5e-3;
+y = [0 0.8 0.6 0 -0.2 0].*62.5e-3;
+
+v_al=0.01;
+v_ret = 0.005;
+ts=1;
 
 
-[Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories([x' , y'] , v , ts , 0.015);
+[Pi_al , Ltr_al , E_al , Vr_al , Traj_al , tt_al , Traj_BE_al] = ComputeTrajectories([x' , y'] , v_al , ts , 0.015);
+[Pi_re , Ltr_re , E_re , Vr_re , Traj_re , tt_re , Traj_BE_re] = ComputeTrajectories([flip(x)' , flip(y)'] , v_ret , ts , 0.015);
 
+Traj_BE_tot = CreateArrayTB(Traj_BE_al , Traj_BE_re);
 
-t_des     = Traj_BE(:,1);
-x_des     = [t_des , Traj_BE(:,2)];
-y_des     = [t_des , Traj_BE(:,3)];
-z_des     = [t_des , Traj_BE(:,4)];
-tfin = 50;
+t_des     = Traj_BE_tot(:,1);
+x_des     = [t_des , Traj_BE_tot(:,2)];
+y_des     = [t_des , Traj_BE_tot(:,3)];
+z_des     = [t_des , Traj_BE_tot(:,4)];
+tfin = 100;
 
 % t_des     = [0:1:8]'*5;
 % x_des     = [t_des, [0 0 0.5 1  0 -1 0 1 0]'*0.05];

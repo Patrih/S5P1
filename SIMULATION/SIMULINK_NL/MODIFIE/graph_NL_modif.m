@@ -40,9 +40,9 @@ end
 % legend( {'Trajectoire simulée' , 'Trajectoire demandée'},'Location','northwest')
 % hold off
 
-x_plot(1) = x_des(1);
-y_plot(1) = y_des(1);
-z_plot(1) = z_des(1);
+x_plot(1) = x_des(1,2);
+y_plot(1) = y_des(1,2);
+z_plot(1) = z_des(1,2);
 t_plot(1) = t_des(1);
 
 for i = 2:length(t_des)
@@ -62,7 +62,7 @@ end
 t_plot(2*length(t_des)) = tfin;
 x_plot(2*length(t_des)) = x_plot(2*length(t_des)-1);
 y_plot(2*length(t_des)) = y_plot(2*length(t_des)-1);
-z_plot(2*length(t_des)) = y_plot(2*length(t_des)-1);
+z_plot(2*length(t_des)) = z_plot(2*length(t_des)-1);
 
 figure(7);
 hold on
