@@ -78,6 +78,20 @@ legend( {'Trajectoire simulée' , 'Trajectoire demandée'},'Location','northeast')
 hold off
 
 
+th = 0:pi/50:2*pi;
+xunit = 0.0625 * cos(th);
+yunit = 0.0625 * sin(th);
+
+figure
+hold on 
+plot(xunit, yunit)
+plot(x_plot, y_plot)
+plot(ynonlineaire(: , 8), ynonlineaire(: , 9))
+
+xlim ([1.1*-R , 1.1*R])
+ylim ([1.1*-R , 1.1*R])
+axis equal
+hold off    
 
 
 

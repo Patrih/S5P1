@@ -17,6 +17,7 @@ function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories(points_
     
     addpath('Functions');
     
+    
     x = points_in(:,1);
     y = points_in(:,2);
     
@@ -49,6 +50,8 @@ function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories(points_
     E_trap = eval(err_trap);
     
     E = E_eval;
+    
+    L = L - E
     
     N_arc = abs(round(L/(v_des*Ts)));
     Vr = L/(N_arc*Ts);
