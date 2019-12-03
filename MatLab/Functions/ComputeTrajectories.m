@@ -1,4 +1,4 @@
-function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories(points_in , v_des , Ts , z)
+function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories(points_in , v_des , Ts , z , al_re)
     % This function do a Lagrange interpolation.
     % param: points_in - (N,2) vector containing the desired points
     % param: v_des     - The desired speed
@@ -123,7 +123,7 @@ function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories(points_
     
     sign_crois = sign(x(2)-x(1));
     
-    x_eval = x(1) : sign_crois*0.0001 : x(end)+0.0001;
+    x_eval = x(1) : sign_crois*0.0001 : x(end);
     y_eval = eval(subs(f_sym , x_eval));
     
     Traj = [x_sep , y_sep];
@@ -137,16 +137,44 @@ function [Pi , Ltr , E , Vr , Traj , tt , Traj_BE] = ComputeTrajectories(points_
     xunit = R * cos(th);
     yunit = R * sin(th);
     
-    figure
-    hold on 
-    plot(x_sep , y_sep , 'o')
-    plot(x_eval , y_eval)
-    plot(xunit, yunit)
-    plot(x,y,'x')
-    xlim ([1.1*-R , 1.1*R])
-    ylim ([1.1*-R , 1.1*R])
-    axis equal
-    hold off
+%     figure(2)
+%     hold on 
+% 
+%     if al_re == 0
+%         plt(1) = plot(x,y,'x k')
+%         plt(2) = plot(x_eval , y_eval,'r','DisplayName','Interpolation allé')
+%         plt(3) = plot(xunit, yunit, 'k','DisplayName','Contour de la plaque')
+%         legend(plt(2:3))
+%     else
+%         plt(1) = plot(x_eval , y_eval,'g','DisplayName','Interpolation retour')
+%         plt(2) = plot(x,y,'x k','DisplayName','Points allé')
+%         legend(plt(1:2))
+%     end
+%     
+%     xlim ([1.1*-R , 1.1*R])
+%     ylim ([1.1*-R , 1.1*R])
+%     axis equal
+%     hold off
+%     
+%     figure(3)
+%     hold on 
+%     
+%     if al_re == 0
+%         plot(x_sep , y_sep , 'o r')
+%         plot(xunit, yunit , 'k')
+%         plot(x,y,'x g')
+%         plot(x_eval , y_eval,'k')
+%     else
+%         plot(x_sep , y_sep , 'o b')
+%         legend('Interpolation', 'Contour de la plaque' , 'Points du prcours')
+%         plot(xunit, yunit , 'k')
+%         plot(x,y,'x g')
+%         plot(x_eval , y_eval,'k')
+%     end
+%     xlim ([1.1*-R , 1.1*R])
+%     ylim ([1.1*-R , 1.1*R])
+%     axis equal
+%     hold off
 
 end
 

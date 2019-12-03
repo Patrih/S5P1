@@ -1,6 +1,6 @@
 % clear all;
-% close all;
-% clc;
+close all;
+clc;
 
 %Fait par : Louis-D
 %Date : 2019-12-02
@@ -43,9 +43,11 @@ y_re = NBA(:,2) ;
 
 
 %Input for the back and forth speeds and Period
+
+
 v_des_al = vAB;
 v_des_ret = vBA;
-Ts = Ts;
+Ts = Ts*25;
 
 z = 0.015;
 
@@ -61,36 +63,123 @@ z = 0.015;
 % hold off
 
 
-% %aller
-% [Pi , Ltr , E , Vr , Traj , tt , Traj_BE_al] = ComputeTrajectories([x_al , y_al] , v_des_al , Ts , z);
-% %retour
-% [Pi , Ltr , E , Vr , Traj , tt , Traj_BE_re] = ComputeTrajectories([x_re , y_re] , v_des_ret , Ts , z);
-% 
-% save('Data/TRAJ_BE_al' , 'Traj_al')
-% save('Data/TRAJ_BE_re' , 'Traj_re')
-% 
-% save('Data/PARAMS_TRAJ' , 'Pi','Ltr','E','Vr','tt')
+%aller
+[Pi_al , Ltr , E , Vr , Traj , tt , Traj_BE_al] = ComputeTrajectories([x_al , y_al] , v_des_al , Ts , z , 0);
+%retour
+[Pi_re , Ltr , E , Vr , Traj , tt , Traj_BE_re] = ComputeTrajectories([x_re , y_re] , v_des_ret , Ts , z , 1);
+
+save('Data/TRAJ_BE_al' , 'Traj_BE_al')
+save('Data/TRAJ_BE_re' , 'Traj_BE_re')
+
+save('Data/PARAMS_TRAJ' , 'Pi_al','Ltr','E','Vr','tt')
+
+
 
 th = 0:pi/50:2*pi;
-xunit = R * cos(th);
-yunit = R * sin(th);
+xunit = 1000.*R * cos(th);
+yunit = 1000.*R * sin(th);
 
-load('Traj_BE_al')
-load('Traj_BE_re')
+x_al_plot = 1000.*x_al;
+y_al_plot = 1000.*y_al;
+
+x_re_plot = 1000.*x_re;
+y_re_plot = 1000.*y_re;
+
+x_plot = [x_al_plot ; x_re_plot];
+y_plot = [y_al_plot ; y_re_plot];
+
+sign_crois_al = sign(x_al(2)-x_al(1));
+x_eval_al = (x_al(1) : sign_crois_al*0.0001 : x_al(end));
+y_eval_al = 1000.*polyval (Pi_al , x_eval_al);
+x_eval_al = 1000.*x_eval_al;
+
+sign_crois_re = sign(x_re(2)-x_re(1));
+x_eval_re = x_re(1) : sign_crois_re*0.0001 : x_re(end);
+y_eval_re = 1000.*polyval (Pi_re , x_eval_re);
+x_eval_re = 1000.*x_eval_re;
+
+x_eval_plot = [x_eval_al  x_eval_re];
+y_eval_plot = [y_eval_al  y_eval_re];
+
+R = R*1000;
+% ------------------ PLOT POINTS ---------------
+figure(1)
+hold on
+plot(xunit, yunit, 'k')
+plot(x_al_plot,y_al_plot,'x r')
+plot(x_re_plot,y_re_plot,'x b')       
+legend('Contour de la plaque' , 'Points aller' , 'Points retour')
+title('Points à suivre pour le trajet aller retour')
+xlabel('Position x (mm)')
+ylabel('Position y (mm)')
+xlim ([1.1*-R , 1.1*R])
+ylim ([1.1*-R , 1.1*R])
+axis equal
+hold off
+
+% ------------------ PLOT POINTS + curve ---------------
+
+figure(2)
+hold on 
+
+plot(xunit, yunit, 'k')
+plot(x_plot,y_plot,'x k')
+plot(x_eval_al , y_eval_al,'r')
+plot(x_eval_re , y_eval_re,'b')
+legend('Contour de la plaque' , 'Points' ,'Interpolation aller', 'Interpolation retour')
+title('Trajet interpolé pour le trajet aller retour')
+xlabel('Position x (mm)')
+ylabel('Position y (mm)')
+xlim ([1.1*-R , 1.1*R])
+ylim ([1.1*-R , 1.1*R])
+axis equal
+hold off
+    
+% ------------------ PLOT POINTS + curve _ sep ---------------
+
+figure(3)
+hold on 
+
+plot(xunit, yunit, 'k')
+plot(x_plot,y_plot,'x k')
+plot(x_eval_plot , y_eval_plot,'-- k')
+plot(1000.*Traj_BE_al(:,2) , 1000.*Traj_BE_al (:,3),'o r')
+plot(1000.*Traj_BE_re(:,2) , 1000.*Traj_BE_re (:,3),'o b')
+
+legend('Contour de la plaque' , 'Points' ,'Interpolation', 'Trajet aller', 'Trajet retour')
+title('Trajet séparé pour le trajet aller retour')
+xlabel('Position x (mm)')
+ylabel('Position y (mm)')
+xlim ([1.1*-R , 1.1*R])
+ylim ([1.1*-R , 1.1*R])
+axis equal
+hold off
+
+
+%-------------- DONNEES FOURNIES -------------
+
+load('Traj_BE_al_fourni')
+load('Traj_BE_re_fourni')
+Traj_BE_al_plot = Traj_BE_al.*1000;
+Traj_BE_re_plot = Traj_BE_re.*1000;
 
 figure
 hold on 
-plot(x_al , y_al , 'x')
-plot(x_re , y_re , 'x')
-plot(Traj_BE_al(:,2) , Traj_BE_al(:,3),'o')
-plot(Traj_BE_re(:,2) , Traj_BE_re(:,3),'o')
-plot(xunit, yunit)
-plot(x_al,y_al,'x')
-plot(x_re,y_re,'x')
+plot(xunit, yunit , 'k');
+plot(Traj_BE_al_plot(:,2) , Traj_BE_al_plot(:,3),'o r','MarkerSize',5)
+plot(Traj_BE_re_plot(:,2) , Traj_BE_re_plot(:,3),'o b','MarkerSize',5)
+plot(x_plot,y_plot,'x k','MarkerSize',10)
+xlabel('Position x (mm)')
+ylabel('Position y (mm)')
+legend('Contour de la plaque'  ,'Trajet aller', 'Trajet retour', 'Points')
+title('Trajet total demandé')
 xlim ([1.1*-R , 1.1*R])
 ylim ([1.1*-R , 1.1*R])
 axis equal
 hold off    
-    
+
+
+
+
     
     

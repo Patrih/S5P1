@@ -26,8 +26,8 @@ addpath ../../../Matlab/Data
 % [Pi_al , Ltr_al , E_al , Vr_al , Traj_al , tt_al , Traj_BE_al] = ComputeTrajectories([x' , y'] , v_al , ts , 0.015);
 % [Pi_re , Ltr_re , E_re , Vr_re , Traj_re , tt_re , Traj_BE_re] = ComputeTrajectories([flip(x)' , flip(y)'] , v_ret , ts , 0.015);
 
-load('Traj_BE_al.mat')
-load('Traj_BE_re.mat')
+load('Traj_BE_al_fourni.mat')
+load('Traj_BE_re_fourni.mat')
 
 Traj_BE_tot = CreateArrayTB(Traj_BE_al , Traj_BE_re);
 

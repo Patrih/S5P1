@@ -12,7 +12,7 @@ units= ["angle(rad)" ,"angle(rad)" , "position(m)" , "vitesse angulaire (rad/s)"
 %             |            00            |             10             |       20        |      
 %figure        1  2  3  4  5  6  7  8  9  0  1  2  3  4  5  6  7  8  9  0  1  2  3  4  5
 %name          Ax Ay Pz Wx Wy Vz Px Py Vx Vy IA IB IC Za Zb Zc Zd Ze Zf FA FB FC VA VB VC
-figure_25  = [ 1  1  0  0  0  0  1  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 ];
+figure_25  = [ 0  0  0  0  0  0  1  1  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0 ];
 
 for i = 1 : 25
     if figure_25(i) == 1
@@ -39,6 +39,7 @@ end
 % plot(t_des_traj , y_des_traj)
 % legend( {'Trajectoire simulée' , 'Trajectoire demandée'},'Location','northwest')
 % hold off
+R = 0.0625;
 
 x_plot(1) = x_des(1,2);
 y_plot(1) = y_des(1,2);
@@ -67,32 +68,52 @@ z_plot(2*length(t_des)) = z_plot(2*length(t_des)-1);
 figure(7);
 hold on
 plot(t_plot, x_plot)
-legend( 'Trajectoire simulée' , 'Trajectoire demandée','Location','southeast')
+legend( 'Trajectoire simulée' , 'Trajectoire demandée','Location','northwest')
 hold off
 
 
 figure(8);
 hold on
 plot(t_plot, y_plot)
-legend( {'Trajectoire simulée' , 'Trajectoire demandée'},'Location','northeast')
+legend( {'Trajectoire simulée' , 'Trajectoire demandée'},'Location','southwest')
 hold off
 
-
+sep = 165000;
 th = 0:pi/50:2*pi;
 xunit = 0.0625 * cos(th);
 yunit = 0.0625 * sin(th);
 
+plot_1 = 3040;
+
 figure
 hold on 
-plot(xunit, yunit)
-plot(x_plot, y_plot)
-plot(ynonlineaire(: , 8), ynonlineaire(: , 9))
-
+plot(xunit, yunit , 'k')
+plot(x_plot(1:plot_1), y_plot(1:plot_1) , 'b')
+plot(ynonlineaire(1:sep , 8), ynonlineaire(1:sep , 9), 'r')
+plot(ynonlineaire(1 , 8), ynonlineaire(1 , 9),'o g');
+plot(ynonlineaire(sep , 8), ynonlineaire(sep , 9),'x g');
+legend('Contour de la plaque','Trajectoire demandée' , 'Trajectoire simulée','Début' , 'Fin');
+title('Comparaison de la position de demandée et simulée de l''aller')
+xlabel('position x (m)')
+ylabel('position y (m)')
 xlim ([1.1*-R , 1.1*R])
 ylim ([1.1*-R , 1.1*R])
 axis equal
-hold off    
+hold off  
 
-
-
+figure
+hold on 
+plot(xunit, yunit , 'k')
+plot(x_plot(plot_1:end), y_plot(plot_1:end) , 'b')
+plot(ynonlineaire(sep:end , 8), ynonlineaire(sep:end , 9), 'r')
+plot(ynonlineaire(sep , 8), ynonlineaire(sep , 9),'o g');
+plot(ynonlineaire(end , 8), ynonlineaire(end , 9),'x g');
+title('Comparaison de la position de demandée et simulée du retour')
+legend('Contour de la plaque','Trajectoire demandée' , 'Trajectoire simulée','Début' , 'Fin');
+xlabel('position x (m)')
+ylabel('position y (m)')
+xlim ([1.1*-R , 1.1*R])
+ylim ([1.1*-R , 1.1*R])
+axis equal
+hold off 
 
